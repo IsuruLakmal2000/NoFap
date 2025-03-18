@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
+import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart'; // Import the FirebaseSignInAuthProvider
+import 'package:firebase_core/firebase_core.dart';
+import 'package:nofap/Reposoteries/FirebaseSignInAuthRepo.dart';
 import 'package:provider/provider.dart';
 import 'routes.dart';
 import 'theme/theme.dart'; // Import the theme
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MainApp());
 }
 
@@ -13,17 +19,25 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-      child: Consumer<AuthProvider>(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<FirebaseSignInAuthProvider>(
+          create:
+              (context) => FirebaseSignInAuthProvider(Firebasesigninauthrepo()),
+        ),
+      ],
+      child: Consumer<FirebaseSignInAuthProvider>(
         builder: (context, authProvider, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme, // Use the custom theme
             initialRoute:
-                authProvider.isOnboardingSeen
-                    ? AppRoutes.home
-                    : AppRoutes.onboarding1,
+                authProvider.user == null
+                    ? AppRoutes.onboarding1
+                    : AppRoutes.home,
             routes: AppRoutes.routes,
           );
         },

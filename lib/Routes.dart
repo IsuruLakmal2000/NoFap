@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Screens/HomeScreen.dart';
+import 'package:nofap/Screens/HomePage.dart';
 import 'package:nofap/Screens/Onboarding/OnboardingScreen1.dart';
 import 'package:nofap/Screens/Onboarding/OnboardingScreen2.dart';
 import 'package:nofap/Screens/Onboarding/OnboardingScreen3.dart';
@@ -20,6 +20,6 @@ class AppRoutes {
     onboarding3: (context) => OnboardingScreen3(),
     onboarding4: (context) => OnboardingScreen4(),
     onboarding5: (context) => OnboardingScreen5(),
-    home: (context) => HomeScreen(),
+    home: (context) => HomePage(),
   };
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "775453438826",
+    "project_id": "nofap-6ea59",
+    "storage_bucket": "nofap-6ea59.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775453438826:android:349784c3b78e94c671ab13",
+        "android_client_info": {
+          "package_name": "com.example.nofap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD77PQgDcSbl15QiWcylo6v3xtNiEMbF3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

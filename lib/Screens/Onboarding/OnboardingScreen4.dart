@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Widgets/CustomButton.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nofap/theme/colors.dart';
 import 'package:nofap/routes.dart';
+import 'package:provider/provider.dart';
 
 class OnboardingScreen4 extends StatefulWidget {
   const OnboardingScreen4({super.key});
@@ -21,92 +23,112 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
     super.dispose();
   }
 
-  void _onNextPressed() {
-    if (_formKey.currentState?.validate() ?? false) {
-      String userName = _nameController.text;
-      // Use the userName variable as needed
-      Navigator.pushNamed(context, AppRoutes.home, arguments: userName);
+  Future<void> _saveUserData(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', userId);
+    await prefs.setBool('isSignedIn', true);
+  }
+
+  void _onNextPressed(BuildContext context) async {
+    final authProvider = Provider.of<FirebaseSignInAuthProvider>(
+      context,
+      listen: false,
+    );
+
+    // Simulate background work
+    // await authProvider.signOut();
+    await authProvider.signInWithGoogle();
+
+    if (authProvider.user != null) {
+      await _saveUserData(authProvider.user!.uid);
+      Navigator.pushNamed(context, AppRoutes.home);
+      print("signed in");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 0, top: 40, right: 0, bottom: 0),
-                child: Column(
-                  children: [
-                    LinearProgressIndicator(
-                      value: 1,
-                      backgroundColor: Colors.grey[300],
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.darkGray,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 0,
+                    top: 40,
+                    right: 0,
+                    bottom: 0,
+                  ),
+                  child: Column(
+                    children: [
+                      LinearProgressIndicator(
+                        value: 1,
+                        backgroundColor: Colors.grey[300],
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.darkGray,
+                        ),
                       ),
-                    ),
-                    Text("100%"),
-                  ],
+                      Text("100%"),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Spacer(),
-              Column(
-                children: [
-                  Text(
-                    'Join Us',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.darkGray,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Log in with Google to start your journey.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.mediumGray,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(height: 60),
+                      Image.asset('Assets/couple.png', height: 200),
+                      SizedBox(height: 20),
+                      Text(
+                        'Join Us',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkGray,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Log in with Google to start your journey.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.mediumGray,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
 
-                  Text(
-                    'Take the first step towards a better you.',
-                    style: TextStyle(fontSize: 14, color: AppColors.mediumGray),
-                    textAlign: TextAlign.center,
+                      CustomButton(
+                        text: 'Continue with Google',
+                        onPressed: () => _onNextPressed(context),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter your name',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'You should need to enter name';
-                      }
-                      return null;
-                    },
-                  ),
-                ],
-              ),
-              Spacer(),
-              CustomButton(
-                text: 'Continue with google',
-                onPressed: _onNextPressed,
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
+          Consumer<FirebaseSignInAuthProvider>(
+            builder: (context, authProvider, child) {
+              return authProvider.isLoading
+                  ? Center(
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  )
+                  : Container();
+            },
+          ),
+        ],
       ),
     );
   }

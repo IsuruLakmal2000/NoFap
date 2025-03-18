@@ -42,19 +42,14 @@ class OnboardingScreen3 extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 30),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Our solution provides structured support through a vibrant community, where members uplift each other daily. You\'ll receive motivating tips and guidance tailored to your journey, along with tools to track your progress and celebrate your milestones. Together, we can create lasting change and foster personal growth.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.mediumGray,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            Text(
+              'Our solution provides structured support through a vibrant community, where members uplift each other daily. You\'ll receive motivating tips and guidance tailored to your journey, along with tools to track your progress and celebrate your milestones. Together, we can create lasting change and foster personal growth.',
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColors.mediumGray,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
             Spacer(),
 
