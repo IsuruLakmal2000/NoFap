@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
+import 'package:nofap/Providers/ChartPointsProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart'; // Import the FirebaseSignInAuthProvider
 import 'package:firebase_core/firebase_core.dart';
 import 'package:nofap/Reposoteries/FirebaseSignInAuthRepo.dart';
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
         ),
+
         ChangeNotifierProvider<FirebaseSignInAuthProvider>(
           create:
               (context) => FirebaseSignInAuthProvider(Firebasesigninauthrepo()),

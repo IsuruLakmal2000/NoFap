@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Stay strong for 5 minutes",
+    "description": "Resist for at least 5 minutes.",
+    "progress": 100,
+    "goal": 5,
+    "showProgress": true
+  },
+  {
+    "id": 2,
+    "title": "Stay strong for 30 minutes",
+    "description": "Resist for at least 30 minutes.",
+    "progress": 10,
+    "goal": 30,
+    "showProgress": true
+  },
+  {
+    "id": 3,
+    "title": "Daily Login",
+    "description": "Login once today.",
+    "progress": 1,
+    "goal": 1,
+    "showProgress": false
+  }
+]

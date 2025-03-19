@@ -1,7 +1,16 @@
 // home_screen.dart
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:nofap/Models/TaslModel.dart';
+import 'package:nofap/Providers/ChartPointsProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:nofap/Services/TaskService.dart';
 import 'package:nofap/Theme/colors.dart';
+import 'package:nofap/Widgets/HomeScreen/RelapseChart.dart';
+import 'package:nofap/Widgets/HomeScreen/TaskCard.dart';
+import 'package:nofap/Widgets/HomeScreen/TimeWidget.dart';
+import 'package:nofap/Widgets/HomeScreen/WeeklyPointChart.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -11,8 +20,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _pageController = PageController(); // Page controller
-  int _currentPage = 0; // Track current page index
+  late Future<List<Task>> taskList;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,130 +90,27 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: PageView(
-                  controller: _pageController,
-                  physics: ScrollPhysics(),
-                  scrollDirection:
-                      Axis.horizontal, // Enable horizontal scrolling
-                  children: [
-                    _buildContainer(context, AppColors.lightGray),
-                    _buildContainer(context, AppColors.lightGray),
-                    _buildContainer(context, AppColors.lightGray),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              SmoothPageIndicator(
-                controller: _pageController, // Connect to PageView
-                count: 3, // Number of pages
-                effect: ExpandingDotsEffect(
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  activeDotColor: Colors.black, // Active dot color
-                  dotColor: Colors.grey, // Inactive dot color
-                ),
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Timewidget(),
+            SizedBox(height: 20),
+            RelapseChart(
+              relapseData: {
+                DateTime(2025, 3, 1): false, // Green
+                DateTime(2025, 3, 2): true, // Red
+                DateTime(2025, 3, 3): false, // Green
+                DateTime(2025, 3, 4): true,
+                DateTime(2025, 3, 10): false,
+
+                DateTime(2025, 2, 20): false, // Red
+              },
+            ),
+            SizedBox(height: 20),
+            WeeklyPointsChart(),
+          ],
         ),
       ),
     );
   }
-}
-
-Widget _buildContainer(BuildContext context, Color color) {
-  double screenWidth = MediaQuery.of(context).size.width * 0.9;
-  return Container(
-    height: 200,
-    width: screenWidth, // Adjust as needed
-    margin: EdgeInsets.symmetric(horizontal: 10),
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [
-              Text(
-                "10",
-                style: TextStyle(
-                  fontSize: 44,
-                  color: AppColors.darkGray,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "days",
-                style: TextStyle(fontSize: 20, color: AppColors.darkGray),
-              ),
-            ],
-          ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "10",
-              style: TextStyle(
-                fontSize: 44,
-                color: AppColors.darkGray,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              "days",
-              style: TextStyle(fontSize: 20, color: AppColors.darkGray),
-            ),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "10",
-              style: TextStyle(
-                fontSize: 44,
-                color: AppColors.darkGray,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              "days",
-              style: TextStyle(fontSize: 20, color: AppColors.darkGray),
-            ),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "10",
-              style: TextStyle(
-                fontSize: 44,
-                color: AppColors.darkGray,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              "days",
-              style: TextStyle(fontSize: 20, color: AppColors.darkGray),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
 }
