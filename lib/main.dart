@@ -3,6 +3,7 @@ import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/ChartPointsProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart'; // Import the FirebaseSignInAuthProvider
 import 'package:firebase_core/firebase_core.dart';
+import 'package:nofap/Providers/UserProvider.dart';
 import 'package:nofap/Reposoteries/FirebaseSignInAuthRepo.dart';
 import 'package:provider/provider.dart';
 import 'routes.dart';
@@ -11,6 +12,8 @@ import 'theme/theme.dart'; // Import the theme
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final userProvider = UserProvider();
+  await userProvider.loadUserData();
 
   runApp(const MainApp());
 }
@@ -25,7 +28,9 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
         ),
-
+        ChangeNotifierProvider<UserProvider>(
+          create: (context) => UserProvider(),
+        ),
         ChangeNotifierProvider<FirebaseSignInAuthProvider>(
           create:
               (context) => FirebaseSignInAuthProvider(Firebasesigninauthrepo()),

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "775453438826",
+    "firebase_url": "https://nofap-6ea59-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "nofap-6ea59",
     "storage_bucket": "nofap-6ea59.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.nofap"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "775453438826-bhc0ikh03kkh4i618hrq4m97f9ft3ipr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nofap",
+            "certificate_hash": "98f8a046edbaa1eea7c301ff723b8fb407d3a87a"
+          }
+        },
+        {
+          "client_id": "775453438826-bgqg2j66rag242mbsv43d91mc2ee8mfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD77PQgDcSbl15QiWcylo6v3xtNiEMbF3g"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775453438826-bgqg2j66rag242mbsv43d91mc2ee8mfr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "775453438826-54ctpplteajedp6p3bgcnvm6foh44hdr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nofap"
+              }
+            }
+          ]
         }
       }
     }

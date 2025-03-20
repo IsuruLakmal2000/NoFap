@@ -1,18 +1,13 @@
-// home_screen.dart
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:nofap/Models/TaslModel.dart';
-import 'package:nofap/Providers/ChartPointsProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Services/TaskService.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/HomeScreen/RelapseChart.dart';
-import 'package:nofap/Widgets/HomeScreen/TaskCard.dart';
+import 'package:nofap/Widgets/HomeScreen/SetStreakDialog.dart';
 import 'package:nofap/Widgets/HomeScreen/TimeWidget.dart';
 import 'package:nofap/Widgets/HomeScreen/WeeklyPointChart.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,10 +16,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Task>> taskList;
+  int currentStreak = 0;
+  int streakDays = 0;
 
   @override
   void initState() {
     super.initState();
+    _checkFirstTimeUser();
+  }
+
+  Future<void> _checkFirstTimeUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    if (isFirstTime) {
+      _showStreakPopup();
+    } else {
+      // Calculate current streak based on saved start date
+      String? startDateString = prefs.getString('streakStartDate');
+      if (startDateString != null) {
+        DateTime startDate = DateTime.parse(startDateString);
+        setState(() {
+          currentStreak = DateTime.now().difference(startDate).inDays;
+        });
+      }
+    }
+  }
+
+  void _showStreakPopup() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SetStreakDialog(
+          initialStreak: streakDays,
+          onSave: (selectedStreak) {
+            setState(() {
+              currentStreak = selectedStreak;
+            });
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -57,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "16Days",
+                          "$currentStreak Days",
                           style: TextStyle(
                             color: AppColors.darkGray,
                             fontWeight: FontWeight.bold,
@@ -95,17 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Timewidget(),
             SizedBox(height: 20),
-            RelapseChart(
-              relapseData: {
-                DateTime(2025, 3, 1): false, // Green
-                DateTime(2025, 3, 2): true, // Red
-                DateTime(2025, 3, 3): false, // Green
-                DateTime(2025, 3, 4): true,
-                DateTime(2025, 3, 10): false,
-
-                DateTime(2025, 2, 20): false, // Red
-              },
-            ),
+            RelapseChart(),
             SizedBox(height: 20),
             WeeklyPointsChart(),
           ],

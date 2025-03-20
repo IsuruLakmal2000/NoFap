@@ -135,8 +135,7 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
                           leftTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
-                              interval:
-                                  10, // Adjust the interval for y-axis titles
+                              interval: 10,
                               getTitlesWidget:
                                   (value, meta) => Text(
                                     value.toInt().toString(),
