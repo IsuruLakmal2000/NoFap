@@ -3,24 +3,30 @@
     "id": 1,
     "title": "Stay strong for 5 minutes",
     "description": "Resist for at least 5 minutes.",
-    "progress": 100,
+    "progress": 0,
     "goal": 5,
-    "showProgress": true
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10
   },
   {
     "id": 2,
     "title": "Stay strong for 30 minutes",
     "description": "Resist for at least 30 minutes.",
-    "progress": 10,
+    "progress": 0,
     "goal": 30,
-    "showProgress": true
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
   },
   {
     "id": 3,
     "title": "Daily Login",
     "description": "Login once today.",
-    "progress": 1,
+    "progress": 0,
     "goal": 1,
-    "showProgress": false
+    "showProgress": false,
+    "rewardType": "points",
+    "rewardAmount": 5
   }
 ]

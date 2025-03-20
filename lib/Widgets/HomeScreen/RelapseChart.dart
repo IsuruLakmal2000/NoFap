@@ -59,7 +59,6 @@ class _RelapseChartState extends State<RelapseChart> {
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
     if (relapseDateStrings != null) {
       setState(() {
-        print("relapse dates ---" + relapseDateStrings.join(', '));
         _relapseData.addAll({
           for (var date in relapseDateStrings)
             DateTime.parse(date).toLocal(): true, // Normalize relapse dates
@@ -82,7 +81,6 @@ class _RelapseChartState extends State<RelapseChart> {
       DateTime oldestRelapseDate = relapseDates.first;
       _oldestRelapseDate = oldestRelapseDate;
       // Store the oldest relapse date in a variable
-      print("Oldest Relapse Date: $oldestRelapseDate");
     } else {
       print("No relapse dates found.");
     }
