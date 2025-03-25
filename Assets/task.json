@@ -84,7 +84,7 @@
     "title": "Stay strong for 2 days",
     "description": "Resist for at least 2 days.",
     "progress": 0,
-    "goal": 2880,
+    "goal": 2,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 4000
@@ -94,7 +94,7 @@
     "title": "Stay strong for 5 days",
     "description": "Resist for at least 5 days.",
     "progress": 0,
-    "goal": 7200,
+    "goal": 5,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 10000
@@ -104,7 +104,7 @@
     "title": "Stay strong for 10 days",
     "description": "Resist for at least 10 days.",
     "progress": 0,
-    "goal": 14400,
+    "goal": 10,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 20000
@@ -114,7 +114,7 @@
     "title": "Stay strong for 20 days",
     "description": "Resist for at least 20 days.",
     "progress": 0,
-    "goal": 28800,
+    "goal": 20,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 40000
@@ -124,7 +124,7 @@
     "title": "Stay strong for 30 days",
     "description": "Resist for at least 30 days.",
     "progress": 0,
-    "goal": 43200,
+    "goal": 30,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 60000
@@ -134,7 +134,7 @@
     "title": "Stay strong for 50 days",
     "description": "Resist for at least 50 days.",
     "progress": 0,
-    "goal": 72000,
+    "goal": 50,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 100000
@@ -144,7 +144,7 @@
     "title": "Stay strong for 75 days",
     "description": "Resist for at least 75 days.",
     "progress": 0,
-    "goal": 108000,
+    "goal": 75,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 150000
@@ -154,7 +154,7 @@
     "title": "Stay strong for 100 days",
     "description": "Resist for at least 100 days.",
     "progress": 0,
-    "goal": 144000,
+    "goal": 100,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 200000
@@ -164,7 +164,7 @@
     "title": "Stay strong for 200 days",
     "description": "Resist for at least 200 days.",
     "progress": 0,
-    "goal": 288000,
+    "goal": 200,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 400000
@@ -174,7 +174,7 @@
     "title": "Stay strong for 300 days",
     "description": "Resist for at least 300 days.",
     "progress": 0,
-    "goal": 432000,
+    "goal": 300,
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 600000

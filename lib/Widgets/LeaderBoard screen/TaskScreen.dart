@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nofap/theme/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:confetti/confetti.dart';
+import 'package:nofap/Utils/TaskUtils.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -41,7 +42,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
     // Load collected task IDs from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove("collectedTaskIds");
+    // prefs.remove("collectedTaskIds");
     final List<String>? collectedTaskIdsString = prefs.getStringList(
       'collectedTaskIds',
     );
@@ -67,30 +68,15 @@ class _TaskScreenState extends State<TaskScreen> {
   Future<void> _checkTaskProgress() async {
     final prefs = await SharedPreferences.getInstance();
     for (var task in tasks) {
-      int progress = 0;
       bool isCollected = collectedTaskIds.contains(task['id']);
-      if (task['id'] == 1) {
-        // Example: Fetch progress for "Stay strong for 5 minutes"
-        String? startDateString = prefs.getString('streakStartDate');
-        if (startDateString != null) {
-          DateTime startDate = DateTime.parse(startDateString);
-          progress = DateTime.now().difference(startDate).inMinutes;
-        }
-      } else if (task['id'] == 2) {
-        String? startDateString = prefs.getString('streakStartDate');
-        if (startDateString != null) {
-          DateTime startDate = DateTime.parse(startDateString);
-          progress = DateTime.now().difference(startDate).inMinutes;
-        }
-      } else if (task['id'] == 3) {
-        // Daily login task
+      int progress = await TaskUtils.calculateTaskProgress(task);
+
+      if (task['id'] == 3) {
+        // Reset collection status for daily login task if not completed today
         final String today = DateTime.now().toIso8601String().split('T')[0];
         final String? lastLoginDate = prefs.getString('lastLoginDate');
-        if (lastLoginDate == today) {
-          progress = 1; // Task completed for today
-        } else {
-          progress = 0; // Task not completed for today
-          isCollected = false; // Reset collection status for a new day
+        if (lastLoginDate != today) {
+          isCollected = false;
           collectedTaskIds.remove(task['id']);
           await prefs.setStringList(
             'collectedTaskIds',
@@ -98,6 +84,7 @@ class _TaskScreenState extends State<TaskScreen> {
           );
         }
       }
+
       setState(() {
         task['progress'] = progress;
         taskCompleted[task['id']] = progress >= task['goal'] && !isCollected;
@@ -175,6 +162,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 itemBuilder: (context, index) {
                   final task = tasks[index];
                   return Card(
+                    shadowColor: Colors.transparent,
                     color: AppColors.lightGray,
                     margin: const EdgeInsets.all(8.0),
                     child: Padding(
@@ -182,6 +170,23 @@ class _TaskScreenState extends State<TaskScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (taskCompleted[task['id']] == true ||
+                              (task['id'] == 3 &&
+                                  task['progress'] == 1 &&
+                                  !collectedTaskIds.contains(task['id'])))
+                            Column(
+                              children: [
+                                Text(
+                                  'Claim your reward',
+                                  style: TextStyle(
+                                    color: AppColors.red,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -204,13 +209,19 @@ class _TaskScreenState extends State<TaskScreen> {
                                   ),
                                 ],
                               ),
+
                               if (taskCompleted[task['id']] == true ||
                                   (task['id'] == 3 &&
                                       task['progress'] == 1 &&
                                       !collectedTaskIds.contains(task['id'])))
-                                ElevatedButton(
-                                  onPressed: () => _collectReward(task['id']),
-                                  child: const Text('Collect'),
+                                Column(
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed:
+                                          () => _collectReward(task['id']),
+                                      child: const Text('Claim'),
+                                    ),
+                                  ],
                                 ),
                             ],
                           ),
@@ -222,7 +233,12 @@ class _TaskScreenState extends State<TaskScreen> {
                                 0.0,
                                 1.0,
                               ),
-                              backgroundColor: AppColors.mediumGray,
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                214,
+                                214,
+                                214,
+                              ),
                               valueColor: const AlwaysStoppedAnimation<Color>(
                                 Color.fromARGB(255, 6, 184, 0),
                               ),
