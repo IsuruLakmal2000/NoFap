@@ -14,27 +14,10 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
   @override
   void initState() {
     super.initState();
-    _generateMockData(); // Generate and load mock data for testing
+    _loadPointsData(); // Load points data directly
   }
 
-  // Generate mock data and save it in SharedPreferences
-  Future<void> _generateMockData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    for (int i = 0; i < 7; i++) {
-      DateTime date = DateTime.now().subtract(Duration(days: i));
-      String key = _getDateKey(date);
-
-      // Generate random points (you can modify this logic to suit your needs)
-      int points =
-          (i % 2 == 0) ? (i + 5) * 10 : (i + 5) * 5; // Example mock data
-      await prefs.setInt(key, points);
-    }
-
-    _loadPointsData(); // Load points data after saving the mock data
-  }
-
-  // Load points data from SharedPreferences
+  // Load points data from SharedPreferences and display last 7 days' points with keys
   Future<void> _loadPointsData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<DateTime, int> pointsMap = {};
@@ -47,6 +30,7 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
       int points =
           prefs.getInt(key) ?? 0; // Default to 0 if no points for that date
       pointsMap[date] = points;
+      print("Key: $key, Points: $points"); // Display key and points in console
     }
 
     setState(() {
@@ -56,6 +40,7 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
 
   // Helper method to generate the key for a specific date
   String _getDateKey(DateTime date) {
+    // Example: For a date like 2023-03-15, the key will be "2023-3-15_taskpoint"
     return "${date.year}-${date.month}-${date.day}_taskpoint";
   }
 
@@ -135,7 +120,14 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
                           leftTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: true,
-                              interval: 10,
+                              interval:
+                                  (_pointsData.isNotEmpty
+                                      ? (_pointsData.values.reduce(
+                                                (a, b) => a > b ? a : b,
+                                              ) /
+                                              5)
+                                          .ceilToDouble()
+                                      : 10), // Dynamically calculate interval
                               getTitlesWidget:
                                   (value, meta) => Text(
                                     value.toInt().toString(),

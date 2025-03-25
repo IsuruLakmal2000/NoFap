@@ -29,6 +29,21 @@ class FirebaseDatabaseService {
     }
   }
 
+  Future<void> updateUserPoints(int points) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Updating points for UID: ${user.uid}");
+        await _dbRef.child('users/${user.uid}/currentPoints').set(points);
+        print("Points updated successfully for UID: ${user.uid}");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating points: $e");
+    }
+  }
+
   Stream<DatabaseEvent> getUserData() {
     final user = _auth.currentUser;
     if (user != null) {
@@ -37,5 +52,9 @@ class FirebaseDatabaseService {
     } else {
       throw Exception("No authenticated user found.");
     }
+  }
+
+  User? getCurrentUser() {
+    return _auth.currentUser;
   }
 }

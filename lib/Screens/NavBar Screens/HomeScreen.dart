@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/Models/TaslModel.dart';
+import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/HomeScreen/RelapseChart.dart';
@@ -18,11 +19,20 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Task>> taskList;
   int currentStreak = 0;
   int streakDays = 0;
+  int userPoints = 0;
 
   @override
   void initState() {
     super.initState();
     _checkFirstTimeUser();
+    _loadUserPoints();
+  }
+
+  Future<void> _loadUserPoints() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    setState(() {
+      userPoints = authProvider.currentUserPoints;
+    });
   }
 
   Future<void> _checkFirstTimeUser() async {
@@ -100,22 +110,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "543",
-                      style: TextStyle(
-                        color: AppColors.darkGray,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Icon(
-                      Icons.star_outlined,
-                      size: 30,
-                      color: AppColors.darkGray,
-                    ),
-                  ],
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, child) {
+                    return Row(
+                      children: [
+                        Text(
+                          "${authProvider.currentUserPoints}",
+                          style: TextStyle(
+                            color: AppColors.darkGray,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Icon(
+                          Icons.star_outlined,
+                          size: 30,
+                          color: AppColors.darkGray,
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             );
