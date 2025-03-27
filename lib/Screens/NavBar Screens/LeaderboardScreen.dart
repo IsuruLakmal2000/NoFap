@@ -4,6 +4,8 @@ import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/LeaderBoard%20screen/LeaderboardWidget.dart';
 import 'package:nofap/Widgets/LeaderBoard%20screen/TaskScreen.dart';
+import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:nofap/Models/LeaderboardUser.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +19,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   int currentStreak = 0;
   late TabController _tabController;
   int userPoints = 0;
+  List<LeaderboardUser> leaderboardUsers = [];
 
   @override
   void initState() {
@@ -24,6 +27,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     _tabController = TabController(length: 2, vsync: this);
     _checkFirstTimeUser();
     _loadUserPoints();
+    _fetchLeaderboardData();
   }
 
   @override
@@ -48,6 +52,14 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         currentStreak = DateTime.now().difference(startDate).inDays;
       });
     }
+  }
+
+  Future<void> _fetchLeaderboardData() async {
+    final firebaseService = FirebaseDatabaseService();
+    final users = await firebaseService.getLeaderboardData();
+    setState(() {
+      leaderboardUsers = users;
+    });
   }
 
   @override
@@ -130,7 +142,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [TaskScreen(), Leaderboardwidget()],
+        children: [
+          TaskScreen(),
+          Leaderboardwidget(leaderboardUsers: leaderboardUsers),
+        ],
       ),
     );
   }

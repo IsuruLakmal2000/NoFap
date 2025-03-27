@@ -30,12 +30,17 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> saveUserData(String username, String avatar, int points) async {
+  Future<void> saveUserData(
+    String username,
+    String avatar,
+    int points,
+    int streakDays,
+  ) async {
     print("inside save data---");
     displayUsername = username;
     avatarId = avatar;
     currentPoints = points;
-    await _dbService.saveUserData(username, avatar, points);
+    await _dbService.saveUserData(username, avatar, points, streakDays);
     print("user data saved00000000000000");
     notifyListeners();
   }

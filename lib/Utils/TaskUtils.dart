@@ -67,37 +67,84 @@ class TaskUtils {
         }
         break;
 
-      case 19: // Post 1 time in the community
-      case 20: // Post 3 times in the community
+      case 19:
+        progress = prefs.getInt('communityPosts') ?? 0;
+        break;
+
+      case 20:
+        progress = prefs.getInt('communityPosts') ?? 0;
+        break;
+
       case 21: // Post 5 times in the community
+        progress = prefs.getInt('communityPosts') ?? 0;
+        break;
+
       case 22: // Post 10 times in the community
+        progress = prefs.getInt('communityPosts') ?? 0;
+        break;
+
       case 23: // Post 50 times in the community
         progress = prefs.getInt('communityPosts') ?? 0;
         break;
 
       case 24: // Earn 100 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 25: // Earn 500 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 26: // Earn 1500 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 27: // Earn 2500 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 28: // Earn 5000 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 29: // Earn 10000 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
       case 30: // Earn 15000 points
+        progress = prefs.getInt('userPoints') ?? 0;
+        break;
+
       case 31: // Earn 25000 points
-        progress = prefs.getInt('totalPoints') ?? 0;
+        progress = prefs.getInt('userPoints') ?? 0;
         break;
 
       case 32: // React to 1 post
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 33: // React to 5 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 34: // React to 10 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 35: // React to 20 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 36: // React to 40 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 37: // React to 70 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 38: // React to 120 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 39: // React to 175 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 40: // React to 250 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 41: // React to 500 posts
+        progress = prefs.getInt('postReactionsCount') ?? 0;
+        break;
       case 42: // React to 1000 posts
-        progress = prefs.getInt('postReactions') ?? 0;
+        progress = prefs.getInt('postReactionsCount') ?? 0;
         break;
 
       default:

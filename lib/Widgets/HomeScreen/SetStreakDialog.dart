@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetStreakDialog extends StatefulWidget {
@@ -17,6 +19,7 @@ class SetStreakDialog extends StatefulWidget {
 
 class _SetStreakDialogState extends State<SetStreakDialog> {
   late int streakDays;
+  bool isLoading = false; // Add loading state
 
   @override
   void initState() {
@@ -26,48 +29,79 @@ class _SetStreakDialogState extends State<SetStreakDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Set Your Current Streak"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("Drag the slider to set your current streak days."),
-          Slider(
-            value: streakDays.toDouble(),
-            min: 0,
-            max: 30, // Allow up to 1 year of streak days
-            divisions: 30,
-            label: "$streakDays Days",
-            onChanged: (value) {
-              setState(() {
-                streakDays = value.toInt();
-              });
-            },
+    return Stack(
+      children: [
+        AlertDialog(
+          title: Text("Set Your Current Streak"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!isLoading) ...[
+                Text("Drag the slider to set your current streak days."),
+                Slider(
+                  value: streakDays.toDouble(),
+                  min: 0,
+                  max: 30, // Allow up to 1 year of streak days
+                  divisions: 30,
+                  label: "$streakDays Days",
+                  onChanged: (value) {
+                    setState(() {
+                      streakDays = value.toInt();
+                    });
+                  },
+                ),
+                Text("Streak Days: $streakDays"),
+              ],
+            ],
           ),
-          Text("Streak Days: $streakDays"),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            DateTime now = DateTime.now();
+          actions: [
+            TextButton(
+              onPressed:
+                  isLoading
+                      ? null // Disable button while loading
+                      : () async {
+                        setState(() {
+                          isLoading = true; // Start loading
+                        });
+                        try {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          DateTime now = DateTime.now();
 
-            // Save streak data
-            await prefs.setBool('isFirstTime', false);
-            await prefs.setInt('currentStreak', streakDays);
-            await prefs.setString(
-              'streakStartDate',
-              now.subtract(Duration(days: streakDays)).toIso8601String(),
-            );
-            // RelapseChart.saveRelapseDate(
-            //   now.subtract(Duration(days: streakDays)),
-            // );
-            widget.onSave(streakDays);
-            Navigator.of(context).pop();
-          },
-          child: Text("Save"),
+                          // Save streak data
+                          await prefs.setBool('isFirstTime', false);
+                          await prefs.setInt('currentStreak', streakDays);
+                          await prefs.setString(
+                            'streakStartDate',
+                            now
+                                .subtract(Duration(days: streakDays))
+                                .toIso8601String(),
+                          );
+                          await FirebaseDatabaseService()
+                              .updateCurrentStreaStartDay(
+                                now
+                                    .subtract(Duration(days: streakDays))
+                                    .toIso8601String(),
+                              );
+                          widget.onSave(streakDays);
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          print("Error saving streak data: $e");
+                        } finally {
+                          setState(() {
+                            isLoading = false; // Stop loading
+                          });
+                        }
+                      },
+              child: Text("Save"),
+            ),
+          ],
         ),
+        if (isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.5), // Semi-transparent overlay
+            child: Center(child: CircularProgressIndicator()),
+          ),
       ],
     );
   }

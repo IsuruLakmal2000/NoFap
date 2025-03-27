@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nofap/Models/LeaderboardUser.dart';
 
 class FirebaseDatabaseService {
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
@@ -9,6 +10,7 @@ class FirebaseDatabaseService {
     String displayUsername,
     String avatarId,
     int currentPoints,
+    int streakDays,
   ) async {
     try {
       final user = _auth.currentUser;
@@ -19,6 +21,7 @@ class FirebaseDatabaseService {
           'displayUsername': displayUsername,
           'avatarId': avatarId,
           'currentPoints': currentPoints,
+          'streakDays': streakDays,
         });
         print("User data saved successfully for UID: ${user.uid}");
       } else {
@@ -44,6 +47,21 @@ class FirebaseDatabaseService {
     }
   }
 
+  Future<void> updateCurrentStreaStartDay(String day) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Updating points for UID: ${user.uid}");
+        await _dbRef.child('users/${user.uid}/streakStartDay').set(day);
+        print("Points updated successfully for UID: ${user.uid}");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating points: $e");
+    }
+  }
+
   Stream<DatabaseEvent> getUserData() {
     final user = _auth.currentUser;
     if (user != null) {
@@ -56,5 +74,27 @@ class FirebaseDatabaseService {
 
   User? getCurrentUser() {
     return _auth.currentUser;
+  }
+
+  Future<List<LeaderboardUser>> getLeaderboardData() async {
+    try {
+      final snapshot = await _dbRef.child('users').get();
+      if (snapshot.exists) {
+        final data = snapshot.value as Map<dynamic, dynamic>;
+        return data.entries.map((entry) {
+            final userData = entry.value as Map<dynamic, dynamic>;
+            final userId = entry.key; // Get the user ID
+            return LeaderboardUser.fromMap(userData)..userId = userId;
+          }).toList()
+          ..sort((a, b) => b.currentPoints.compareTo(a.currentPoints))
+          ..take(50).toList();
+      } else {
+        print("No leaderboard data found.");
+        return [];
+      }
+    } catch (e) {
+      print("Error fetching leaderboard data: $e");
+      return [];
+    }
   }
 }

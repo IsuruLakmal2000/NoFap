@@ -32,8 +32,8 @@ class _RelapseChartState extends State<RelapseChart> {
     super.initState();
     _loadData();
     getOldestRelapsedDate();
-    RelapseChart.saveRelapseDate(DateTime(2025, 3, 10));
-    RelapseChart.saveRelapseDate(DateTime(2025, 3, 5));
+    // RelapseChart.saveRelapseDate(DateTime(2025, 3, 10));
+    // RelapseChart.saveRelapseDate(DateTime(2025, 3, 5));
   }
 
   Future<void> _loadData() async {
@@ -72,6 +72,7 @@ class _RelapseChartState extends State<RelapseChart> {
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
 
     if (relapseDateStrings != null) {
+      print('relapse adt');
       // Parse the dates and find the oldest one
       List<DateTime> relapseDates =
           relapseDateStrings
@@ -82,6 +83,15 @@ class _RelapseChartState extends State<RelapseChart> {
       _oldestRelapseDate = oldestRelapseDate;
       // Store the oldest relapse date in a variable
     } else {
+      String? startDateString = prefs.getString('streakStartDate');
+      DateTime startDate = DateTime.parse(startDateString!);
+      DateTime normalizedStartDate = DateTime(
+        startDate.year,
+        startDate.month,
+        startDate.day,
+      );
+      RelapseChart.saveRelapseDate(normalizedStartDate);
+      _loadData();
       print("No relapse dates found.");
     }
   }

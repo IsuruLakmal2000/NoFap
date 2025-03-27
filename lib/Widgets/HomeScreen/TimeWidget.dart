@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -46,6 +47,9 @@ class _TimewidgetState extends State<Timewidget> {
     DateTime now = DateTime.now();
     await prefs.setString('streakStartDate', now.toIso8601String());
     String? startDateString = prefs.getString('streakStartDate');
+    await FirebaseDatabaseService().updateCurrentStreaStartDay(
+      startDateString!,
+    );
     if (startDateString != null) {
       setState(() {
         _streakStartDate = DateTime.parse(startDateString);

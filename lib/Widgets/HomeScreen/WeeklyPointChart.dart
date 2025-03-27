@@ -122,11 +122,15 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
                               showTitles: true,
                               interval:
                                   (_pointsData.isNotEmpty
-                                      ? (_pointsData.values.reduce(
+                                      ? ((_pointsData.values.reduce(
                                                 (a, b) => a > b ? a : b,
                                               ) /
                                               5)
                                           .ceilToDouble()
+                                          .clamp(
+                                            1,
+                                            double.infinity,
+                                          )) // Ensure interval is at least 1
                                       : 10), // Dynamically calculate interval
                               getTitlesWidget:
                                   (value, meta) => Text(

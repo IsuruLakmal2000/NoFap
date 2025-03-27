@@ -32,7 +32,7 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
     await prefs.setString('userId', userId);
     await prefs.setBool('isSignedIn', true);
     final username = _nameController.text.trim();
-    await userProvider.saveUserData(username, "none", 0);
+    await userProvider.saveUserData(username, "none", 0, 0);
   }
 
   void _onNextPressed(BuildContext context) async {

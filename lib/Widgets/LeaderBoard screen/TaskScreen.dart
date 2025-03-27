@@ -40,9 +40,7 @@ class _TaskScreenState extends State<TaskScreen> {
     final String response = await rootBundle.loadString('Assets/task.json');
     final List<dynamic> data = json.decode(response);
 
-    // Load collected task IDs from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    // prefs.remove("collectedTaskIds");
     final List<String>? collectedTaskIdsString = prefs.getStringList(
       'collectedTaskIds',
     );
@@ -51,12 +49,16 @@ class _TaskScreenState extends State<TaskScreen> {
             ? collectedTaskIdsString.map((id) => int.parse(id)).toSet()
             : {};
 
-    // Filter out collected tasks, except for the daily login task (ID 3)
+    // Check if the daily login task should be shown
+    final String today = DateTime.now().toIso8601String().split('T')[0];
+    final String? lastLoginDate = prefs.getString('lastLoginDate');
+    bool showDailyLoginTask = lastLoginDate != today;
+
     setState(() {
       tasks =
           data.where((task) {
             if (task['id'] == 3) {
-              return true; // Always show the daily login task
+              return showDailyLoginTask; // Show daily login task only if not completed today
             }
             return !collectedTaskIds.contains(task['id']);
           }).toList();
@@ -88,6 +90,7 @@ class _TaskScreenState extends State<TaskScreen> {
       setState(() {
         task['progress'] = progress;
         taskCompleted[task['id']] = progress >= task['goal'] && !isCollected;
+        taskCompleted[3] = true;
       });
     }
 
@@ -109,6 +112,7 @@ class _TaskScreenState extends State<TaskScreen> {
   Future<void> _collectReward(int taskId) async {
     final prefs = await SharedPreferences.getInstance();
     final task = tasks.firstWhere((t) => t['id'] == taskId);
+    print("Task Completed Status: $taskCompleted");
     if (taskCompleted[taskId] == true) {
       // Example: Add reward logic
       if (task['rewardType'] == 'points') {
@@ -172,8 +176,9 @@ class _TaskScreenState extends State<TaskScreen> {
                         children: [
                           if (taskCompleted[task['id']] == true ||
                               (task['id'] == 3 &&
-                                  task['progress'] == 1 &&
-                                  !collectedTaskIds.contains(task['id'])))
+                                  !collectedTaskIds.contains(
+                                    task['id'],
+                                  ))) // Adjusted condition
                             Column(
                               children: [
                                 Text(
@@ -212,8 +217,9 @@ class _TaskScreenState extends State<TaskScreen> {
 
                               if (taskCompleted[task['id']] == true ||
                                   (task['id'] == 3 &&
-                                      task['progress'] == 1 &&
-                                      !collectedTaskIds.contains(task['id'])))
+                                      !collectedTaskIds.contains(
+                                        task['id'],
+                                      ))) // Adjusted condition
                                 Column(
                                   children: [
                                     ElevatedButton(
@@ -243,9 +249,22 @@ class _TaskScreenState extends State<TaskScreen> {
                                 Color.fromARGB(255, 6, 184, 0),
                               ),
                             ),
-                            Text(
-                              'Progress: ${task['progress']} / ${task['goal']}',
-                              style: TextStyle(color: AppColors.darkGray2),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Progress: ${task['progress']} / ${task['goal']}',
+                                  style: TextStyle(color: AppColors.darkGray2),
+                                ),
+                                Text(
+                                  'Reward : ${task['rewardAmount']} ${task['rewardType']}',
+                                  style: TextStyle(
+                                    color: AppColors.darkGray2,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ],

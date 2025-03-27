@@ -1,68 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/theme/colors.dart';
+import 'package:nofap/Models/LeaderboardUser.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
-class Leaderboardwidget extends StatefulWidget {
-  const Leaderboardwidget({super.key});
+import 'package:nofap/Providers/AuthProvider.dart' as LocalAuthProvider;
 
-  @override
-  State<Leaderboardwidget> createState() => _LeaderboardwidgetState();
-}
+class Leaderboardwidget extends StatelessWidget {
+  final List<LeaderboardUser> leaderboardUsers;
 
-class _LeaderboardwidgetState extends State<Leaderboardwidget> {
-  // Dummy data for leaderboard
-  final List<Map<String, dynamic>> leaderboardData = [
-    {'username': 'User1', 'points': 1200, 'streakDays': 15},
-    {'username': 'User2', 'points': 1100, 'streakDays': 10},
-    {'username': 'User3', 'points': 900, 'streakDays': 8},
-    {'username': 'User4', 'points': 850, 'streakDays': 5},
-    {'username': 'User5', 'points': 800, 'streakDays': 3},
-  ];
+  const Leaderboardwidget({Key? key, required this.leaderboardUsers})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
     return Scaffold(
       body: ListView.builder(
-        itemCount: leaderboardData.length,
+        itemCount: leaderboardUsers.length,
         itemBuilder: (context, index) {
-          final item = leaderboardData[index];
+          final user = leaderboardUsers[index];
+          final isCurrentUser = user.userId == currentUserId;
+
           return Card(
             shadowColor: Colors.transparent,
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            color:
+                isCurrentUser
+                    ? Colors.amber
+                    : AppColors.lightGray, // Highlight current user
             child: ListTile(
               trailing: SizedBox(
-                width: 80, // Define a fixed width for the trailing widget
+                width: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "232",
-                      style: TextStyle(
-                        color: AppColors.darkGray,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
+                    Consumer<LocalAuthProvider.AuthProvider>(
+                      builder: (context, authProvider, child) {
+                        return Text(
+                          isCurrentUser
+                              ? "${authProvider.currentUserPoints}"
+                              : "${user.currentPoints}",
+                          style: TextStyle(
+                            color: AppColors.darkGray,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        );
+                      },
                     ),
+
                     Icon(
                       Icons.star_outlined,
                       size: 24,
-                      color: AppColors.darkGray,
+                      color: AppColors.yellow,
                     ),
                   ],
                 ),
               ),
-              leading: CircleAvatar(
-                child: Text(
-                  '${index + 1}',
-                  style: TextStyle(
-                    color: AppColors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              leading: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 0,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Text(
+                      '${index + 1}',
+                      style: TextStyle(
+                        color: index < 3 ? AppColors.red : AppColors.darkGray,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 22,
+                        backgroundColor: AppColors.darkGray, // Frame color
+                      ),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: AppColors.lightGray,
+                        child: Icon(
+                          Icons.person, // Dummy icon for avatar
+                          color: AppColors.darkGray,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               dense: false,
-              title: Text(item['username']),
-              subtitle: Text('Streak: ${item['streakDays']} days'),
+              title: Text(
+                user.username,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Streak: ${user.currentStreakStartDate.isNotEmpty ? DateTime.now().difference(DateTime.tryParse(user.currentStreakStartDate) ?? DateTime(1970, 1, 1)).inDays : '0'} days',
+              ),
             ),
           );
         },

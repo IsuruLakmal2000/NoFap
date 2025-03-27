@@ -34,50 +34,50 @@
     "title": "Stay strong for 1 hour",
     "description": "Resist for at least 1 hour.",
     "progress": 0,
-    "goal": 60,
+    "goal": 1,
     "showProgress": true,
-    "rewardType": "points",
-    "rewardAmount": 100
+    "rewardType": "Avatar",
+    "rewardAmount": 1
   },
   {
     "id": 5,
     "title": "Stay strong for 2 hours",
     "description": "Resist for at least 2 hours.",
     "progress": 0,
-    "goal": 120,
+    "goal": 2,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 200
+    "rewardAmount": 100
   },
   {
     "id": 6,
     "title": "Stay strong for 5 hours",
     "description": "Resist for at least 5 hours.",
     "progress": 0,
-    "goal": 300,
+    "goal": 5,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 500
+    "rewardAmount": 150
   },
   {
     "id": 7,
     "title": "Stay strong for 15 hours",
     "description": "Resist for at least 15 hours.",
     "progress": 0,
-    "goal": 900,
+    "goal": 15,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 1500
+    "rewardAmount": 200
   },
   {
     "id": 8,
     "title": "Stay strong for 1 day",
     "description": "Resist for at least 1 day.",
     "progress": 0,
-    "goal": 1440,
+    "goal": 1,
     "showProgress": true,
-    "rewardType": "points",
-    "rewardAmount": 2000
+    "rewardType": "Avatar",
+    "rewardAmount": 1
   },
   {
     "id": 9,
@@ -86,8 +86,8 @@
     "progress": 0,
     "goal": 2,
     "showProgress": true,
-    "rewardType": "points",
-    "rewardAmount": 4000
+    "rewardType": "Frame",
+    "rewardAmount": 1
   },
   {
     "id": 10,
@@ -97,7 +97,7 @@
     "goal": 5,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 10000
+    "rewardAmount": 400
   },
   {
     "id": 11,
@@ -107,7 +107,7 @@
     "goal": 10,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 20000
+    "rewardAmount": 500
   },
   {
     "id": 12,
@@ -117,7 +117,7 @@
     "goal": 20,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 40000
+    "rewardAmount": 800
   },
   {
     "id": 13,
@@ -127,7 +127,7 @@
     "goal": 30,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 60000
+    "rewardAmount": 1000
   },
   {
     "id": 14,
@@ -137,7 +137,7 @@
     "goal": 50,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 100000
+    "rewardAmount": 2000
   },
   {
     "id": 15,
@@ -147,7 +147,7 @@
     "goal": 75,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 150000
+    "rewardAmount": 3000
   },
   {
     "id": 16,
@@ -157,7 +157,7 @@
     "goal": 100,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 200000
+    "rewardAmount": 4000
   },
   {
     "id": 17,
@@ -167,7 +167,7 @@
     "goal": 200,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 400000
+    "rewardAmount": 6000
   },
   {
     "id": 18,
@@ -177,7 +177,7 @@
     "goal": 300,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 600000
+    "rewardAmount": 10000
   },
   {
     "id": 19,
@@ -197,7 +197,7 @@
     "goal": 3,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 30
+    "rewardAmount": 20
   },
   {
     "id": 21,
@@ -207,7 +207,7 @@
     "goal": 5,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 50
+    "rewardAmount": 30
   },
   {
     "id": 22,
@@ -217,7 +217,7 @@
     "goal": 10,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 100
+    "rewardAmount": 50
   },
   {
     "id": 23,
@@ -236,7 +236,7 @@
     "progress": 0,
     "goal": 100,
     "showProgress": true,
-    "rewardType": "badge",
+    "rewardType": "Avatar",
     "rewardAmount": 1
   },
   {
@@ -246,8 +246,8 @@
     "progress": 0,
     "goal": 500,
     "showProgress": true,
-    "rewardType": "badge",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 50
   },
   {
     "id": 26,
@@ -256,7 +256,7 @@
     "progress": 0,
     "goal": 1500,
     "showProgress": true,
-    "rewardType": "badge",
+    "rewardType": "Frame",
     "rewardAmount": 1
   },
   {
@@ -266,8 +266,8 @@
     "progress": 0,
     "goal": 2500,
     "showProgress": true,
-    "rewardType": "badge",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 200
   },
   {
     "id": 28,
@@ -276,8 +276,8 @@
     "progress": 0,
     "goal": 5000,
     "showProgress": true,
-    "rewardType": "badge",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 500
   },
   {
     "id": 29,
@@ -286,8 +286,8 @@
     "progress": 0,
     "goal": 10000,
     "showProgress": true,
-    "rewardType": "badge",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 1000
   },
   {
     "id": 30,
@@ -296,7 +296,7 @@
     "progress": 0,
     "goal": 15000,
     "showProgress": true,
-    "rewardType": "badge",
+    "rewardType": "Avatar",
     "rewardAmount": 1
   },
   {
@@ -306,7 +306,7 @@
     "progress": 0,
     "goal": 25000,
     "showProgress": true,
-    "rewardType": "badge",
+    "rewardType": "Frame",
     "rewardAmount": 1
   },
   {
@@ -327,7 +327,7 @@
     "goal": 5,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 50
+    "rewardAmount": 10
   },
   {
     "id": 34,
@@ -337,7 +337,7 @@
     "goal": 10,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 100
+    "rewardAmount": 50
   },
   {
     "id": 35,
@@ -346,8 +346,8 @@
     "progress": 0,
     "goal": 20,
     "showProgress": true,
-    "rewardType": "points",
-    "rewardAmount": 200
+    "rewardType": "Frame",
+    "rewardAmount": 1
   },
   {
     "id": 36,
@@ -357,7 +357,7 @@
     "goal": 40,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 400
+    "rewardAmount": 200
   },
   {
     "id": 37,
@@ -367,7 +367,7 @@
     "goal": 70,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 700
+    "rewardAmount": 400
   },
   {
     "id": 38,
@@ -376,8 +376,8 @@
     "progress": 0,
     "goal": 120,
     "showProgress": true,
-    "rewardType": "points",
-    "rewardAmount": 1200
+    "rewardType": "Avatar",
+    "rewardAmount": 1
   },
   {
     "id": 39,
@@ -387,7 +387,7 @@
     "goal": 175,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 1750
+    "rewardAmount": 650
   },
   {
     "id": 40,
@@ -397,7 +397,7 @@
     "goal": 250,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 2500
+    "rewardAmount": 900
   },
   {
     "id": 41,
@@ -407,18 +407,9 @@
     "goal": 500,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 5000
+    "rewardAmount": 1500
   },
-  {
-    "id": 3,
-    "title": "Daily Login",
-    "description": "Login once today.",
-    "progress": 0,
-    "goal": 1,
-    "showProgress": false,
-    "rewardType": "points",
-    "rewardAmount": 5
-  },
+
   {
     "id": 42,
     "title": "React to 1000 posts",
@@ -427,6 +418,6 @@
     "goal": 1000,
     "showProgress": true,
     "rewardType": "points",
-    "rewardAmount": 10000
+    "rewardAmount": 3000
   }
 ]
