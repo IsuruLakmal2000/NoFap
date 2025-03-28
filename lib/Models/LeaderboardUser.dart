@@ -3,6 +3,7 @@ class LeaderboardUser {
   final String currentStreakStartDate;
   final int currentPoints;
   final String avatarId;
+  final String frameId;
   String? userId; // Added userId field
 
   LeaderboardUser({
@@ -10,6 +11,7 @@ class LeaderboardUser {
     required this.currentStreakStartDate,
     required this.currentPoints,
     required this.avatarId,
+    required this.frameId,
     this.userId,
   });
 
@@ -19,6 +21,7 @@ class LeaderboardUser {
       currentStreakStartDate: data['streakStartDay'] ?? '',
       currentPoints: data['currentPoints'] ?? 0,
       avatarId: data['avatarId'] ?? '',
+      frameId: data['frameId'] ?? '',
     );
   }
 }

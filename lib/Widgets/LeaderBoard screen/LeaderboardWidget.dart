@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
 import 'package:nofap/theme/colors.dart';
 import 'package:nofap/Models/LeaderboardUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,7 @@ class Leaderboardwidget extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             color:
                 isCurrentUser
-                    ? Colors.amber
+                    ? const Color.fromARGB(255, 255, 238, 186)
                     : AppColors.lightGray, // Highlight current user
             child: ListTile(
               trailing: SizedBox(
@@ -64,33 +65,51 @@ class Leaderboardwidget extends StatelessWidget {
                 spacing: 0,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Text(
-                      '${index + 1}',
-                      style: TextStyle(
-                        color: index < 3 ? AppColors.red : AppColors.darkGray,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  Center(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      child: Text(
+                        '${index + 1}',
+                        style: TextStyle(
+                          color: index < 3 ? AppColors.red : AppColors.darkGray,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 22,
-                        backgroundColor: AppColors.darkGray, // Frame color
-                      ),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: AppColors.lightGray,
-                        child: Icon(
-                          Icons.person, // Dummy icon for avatar
-                          color: AppColors.darkGray,
-                        ),
-                      ),
-                    ],
+                  Consumer<AvatarAndFrameProvider>(
+                    builder: (context, avatarProvider, child) {
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: AppColors.lightGray,
+                            backgroundImage:
+                                isCurrentUser
+                                    ? AssetImage(
+                                      "Assets/Avatars/${avatarProvider.currentAvatar}.jpg",
+                                    )
+                                    : AssetImage(
+                                      "Assets/Avatars/${user.avatarId}.jpg",
+                                    ),
+                          ),
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.transparent, // Frame color
+                            backgroundImage:
+                                isCurrentUser
+                                    ? AssetImage(
+                                      "Assets/Frames/${avatarProvider.currentFrame}.png",
+                                    )
+                                    : AssetImage(
+                                      "Assets/Frames/${user.frameId}.png",
+                                    ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

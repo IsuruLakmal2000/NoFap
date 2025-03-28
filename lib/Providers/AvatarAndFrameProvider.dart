@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:nofap/Services/FirebaseDatabaseService.dart';
 
 class AvatarAndFrameProvider with ChangeNotifier {
   String _currentAvatar = "none"; // Default avatar
@@ -25,16 +26,26 @@ class AvatarAndFrameProvider with ChangeNotifier {
   }
 
   Future<void> updateAvatar(String newAvatar) async {
+    print("inside usssp");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('currentAvatar', newAvatar);
     _currentAvatar = newAvatar;
     notifyListeners();
+
+    // Save to Firebase
+    final firebaseService = FirebaseDatabaseService();
+    await firebaseService.updateUserAvatar(newAvatar);
   }
 
   Future<void> updateFrame(String newFrame) async {
+    print("inside up");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('currentFrame', newFrame);
     _currentFrame = newFrame;
     notifyListeners();
+
+    // Save to Firebase
+    final firebaseService = FirebaseDatabaseService();
+    await firebaseService.updateUserFrame(newFrame);
   }
 }

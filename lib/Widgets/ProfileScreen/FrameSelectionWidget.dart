@@ -8,10 +8,7 @@ class Frameselectionwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> frames = [
-      'Assets/Frames/frame1.png',
-      'Assets/Frames/frame2.png',
-    ];
+    final List<String> frames = ['Assets/Frames/frame1.png'];
 
     return Container(
       padding: EdgeInsets.all(16.0),

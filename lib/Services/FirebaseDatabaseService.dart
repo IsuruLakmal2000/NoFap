@@ -9,6 +9,7 @@ class FirebaseDatabaseService {
   Future<void> saveUserData(
     String displayUsername,
     String avatarId,
+    String frameId,
     int currentPoints,
     int streakDays,
   ) async {
@@ -20,6 +21,7 @@ class FirebaseDatabaseService {
         await _dbRef.child('users/${user.uid}').set({
           'displayUsername': displayUsername,
           'avatarId': avatarId,
+          'frameId': frameId,
           'currentPoints': currentPoints,
           'streakDays': streakDays,
         });
@@ -59,6 +61,36 @@ class FirebaseDatabaseService {
       }
     } catch (e) {
       print("Error updating points: $e");
+    }
+  }
+
+  Future<void> updateUserAvatar(String avatarId) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Updating avatar for UID: ${user.uid}");
+        await _dbRef.child('users/${user.uid}/avatarId').set(avatarId);
+        print("Avatar updated successfully for UID: ${user.uid}");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating avatar: $e");
+    }
+  }
+
+  Future<void> updateUserFrame(String frameId) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Updating frame for UID: ${user.uid}");
+        await _dbRef.child('users/${user.uid}/frameId').set(frameId);
+        print("Frame updated successfully for UID: ${user.uid}");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating frame: $e");
     }
   }
 

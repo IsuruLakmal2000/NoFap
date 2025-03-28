@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
@@ -186,10 +187,11 @@ class ProfileScreen extends StatelessWidget {
                 builder:
                     (context) => AvatarSelectionSheet(
                       onAvatarSelected: (String avatar) {
+                        print("av sel=" + avatar);
                         Provider.of<AvatarAndFrameProvider>(
                           context,
                           listen: false,
-                        ).updateAvatar(avatar);
+                        ).updateAvatar(avatar); // Triggers Firebase update
                         Navigator.pop(context);
                       },
                     ),
@@ -207,11 +209,12 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 builder:
                     (context) => Frameselectionwidget(
-                      onFrameSelected: (String avatar) {
+                      onFrameSelected: (String frame) {
+                        print("frame sel=" + frame);
                         Provider.of<AvatarAndFrameProvider>(
                           context,
                           listen: false,
-                        ).updateFrame(avatar);
+                        ).updateFrame(frame); // Triggers Firebase update
                         Navigator.pop(context);
                       },
                     ),

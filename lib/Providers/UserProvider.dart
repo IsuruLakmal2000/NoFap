@@ -4,7 +4,8 @@ import 'package:nofap/Services/FirebaseDatabaseService.dart';
 
 class UserProvider extends ChangeNotifier {
   String displayUsername = '';
-  String avatarId = 'default_avatar';
+  String avatarId = 'none';
+  String frameId = 'none';
   int currentPoints = 0;
 
   final FirebaseDatabaseService _dbService = FirebaseDatabaseService();
@@ -21,6 +22,7 @@ class UserProvider extends ChangeNotifier {
         final data = Map<String, dynamic>.from(event.snapshot.value as Map);
         displayUsername = data['displayUsername'];
         avatarId = data['avatarId'];
+        frameId = data['frameId'];
         currentPoints = data['currentPoints'];
         notifyListeners();
         _isLoaded = true;
@@ -33,14 +35,16 @@ class UserProvider extends ChangeNotifier {
   Future<void> saveUserData(
     String username,
     String avatar,
+    String frame,
     int points,
     int streakDays,
   ) async {
     print("inside save data---");
     displayUsername = username;
     avatarId = avatar;
+    frameId = frame;
     currentPoints = points;
-    await _dbService.saveUserData(username, avatar, points, streakDays);
+    await _dbService.saveUserData(username, avatar, frame, points, streakDays);
     print("user data saved00000000000000");
     notifyListeners();
   }
