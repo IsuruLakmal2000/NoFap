@@ -129,6 +129,35 @@ class _TaskScreenState extends State<TaskScreen> {
         int currentPoints = prefs.getInt(todayKey) ?? 0;
         print("----$todayKey::$currentPoints + $rewardPoints;");
         await prefs.setInt(todayKey, currentPoints + rewardPoints);
+      } else if (task['rewardType'] == 'Avatar') {
+        switch (task['id']) {
+          case 4:
+            await prefs.setBool('is_unlock_avatar2', true);
+            break;
+          case 8:
+            await prefs.setBool('is_unlock_avatar1', true);
+            break;
+          case 30:
+            await prefs.setBool('is_unlock_avatar5', true);
+            break;
+          case 38:
+            await prefs.setBool('is_unlock_avatar3', true);
+            break;
+        }
+        String avatarKey = 'is_unlock_${task['rewardName']}';
+        await prefs.setBool(avatarKey, true);
+      } else if (task['rewardType'] == 'Frame') {
+        switch (task['id']) {
+          case 9:
+            await prefs.setBool('is_unlock_frame5', true);
+            break;
+          case 26:
+            await prefs.setBool('is_unlock_frame3', true);
+            break;
+          case 31:
+            await prefs.setBool('is_unlock_frame2', true);
+            break;
+        }
       }
 
       // Mark the task as collected

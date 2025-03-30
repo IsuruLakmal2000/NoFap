@@ -236,8 +236,8 @@
     "progress": 0,
     "goal": 100,
     "showProgress": true,
-    "rewardType": "Avatar",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 50
   },
   {
     "id": 25,
@@ -346,8 +346,8 @@
     "progress": 0,
     "goal": 20,
     "showProgress": true,
-    "rewardType": "Frame",
-    "rewardAmount": 1
+    "rewardType": "points",
+    "rewardAmount": 100
   },
   {
     "id": 36,

@@ -58,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                                     ? AssetImage(
                                       "Assets/Avatars/${avatarProvider.currentAvatar}.jpg",
                                     )
-                                    : null,
+                                    : AssetImage("Assets/Avatars/none.jpg"),
                             child:
                                 avatarProvider.currentAvatar == null
                                     ? Icon(
@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                                     : null,
                           ),
                           CircleAvatar(
-                            radius: 50,
+                            radius: 55,
                             backgroundColor: Colors.transparent,
                             backgroundImage:
                                 avatarProvider.currentAvatar != null
