@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nofap/Models/TaslModel.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:nofap/Screens/PanicScreen.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/HomeScreen/RelapseChart.dart';
 import 'package:nofap/Widgets/HomeScreen/SetStreakDialog.dart';
@@ -82,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.local_fire_department_sharp,
@@ -147,6 +150,16 @@ class _HomeScreenState extends State<HomeScreen> {
             WeeklyPointsChart(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PanicScreen()),
+          );
+        },
+        backgroundColor: AppColors.red,
+        child: Icon(Icons.warning_rounded, color: Colors.white),
       ),
     );
   }

@@ -15,6 +15,7 @@ dependencies:
     sdk: flutter
   google_nav_bar: ^5.0.7
   google_sign_in: ^6.3.0
+  lottie: ^3.3.1
   provider: ^6.1.2
   shared_preferences: ^2.5.2
   smooth_page_indicator: ^1.2.1
@@ -49,3 +50,7 @@ flutter:
     - Assets/Frames/frame4.png
     - Assets/Frames/frame5.png
     - Assets/Frames/frame6.png
+    - Assets/Lottie/heart.json
+    - Assets/Lottie/heartbeat.json
+    - Assets/Lottie/done.json
+    - Assets/Lottie/streak.json
