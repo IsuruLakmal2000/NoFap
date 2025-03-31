@@ -19,6 +19,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
   int currentStreak = 0;
   late TabController _tabController;
   int userPoints = 0;
+  late String username = '';
   List<LeaderboardUser> leaderboardUsers = [];
 
   @override
@@ -38,6 +39,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   Future<void> _loadUserPoints() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    username = prefs.getString('username') ?? 'Guest';
     setState(() {
       userPoints = prefs.getInt("userPoints") ?? 0;
     });
@@ -89,7 +91,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          authProvider.user?.displayName?.toString() ?? 'Guest',
+                          username ?? 'Guest',
                           style: TextStyle(
                             color: AppColors.darkGray,
                             fontWeight: FontWeight.bold,

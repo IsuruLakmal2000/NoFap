@@ -33,6 +33,7 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
     await prefs.setBool('isSignedIn', true);
 
     final username = _nameController.text.trim();
+    prefs.setString('userName', username);
     await userProvider.saveUserData(username, "none", "none", 0, 0);
   }
 

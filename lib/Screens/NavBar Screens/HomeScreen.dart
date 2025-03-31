@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentStreak = 0;
   int streakDays = 0;
   int userPoints = 0;
+  late String username = '';
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _checkFirstTimeUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
+    username = prefs.getString('username') ?? '';
     if (isFirstTime) {
       _showStreakPopup();
     } else {
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          authProvider.user?.displayName?.toString() ?? 'Guest',
+                          username ?? 'Guest',
                           style: TextStyle(
                             color: AppColors.darkGray,
                             fontWeight: FontWeight.bold,

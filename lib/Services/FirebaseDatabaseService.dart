@@ -94,6 +94,23 @@ class FirebaseDatabaseService {
     }
   }
 
+  Future<void> updateUserName(String displayUsername) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Updating username for UID: ${user.uid}");
+        await _dbRef
+            .child('users/${user.uid}/displayUsername')
+            .set(displayUsername);
+        print("Username updated successfully for UID: ${user.uid}");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating username: $e");
+    }
+  }
+
   Stream<DatabaseEvent> getUserData() {
     final user = _auth.currentUser;
     if (user != null) {

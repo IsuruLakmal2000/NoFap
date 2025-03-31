@@ -130,34 +130,48 @@ class _TaskScreenState extends State<TaskScreen> {
         print("----$todayKey::$currentPoints + $rewardPoints;");
         await prefs.setInt(todayKey, currentPoints + rewardPoints);
       } else if (task['rewardType'] == 'Avatar') {
+        String avatarKey = '';
         switch (task['id']) {
           case 4:
+            avatarKey = 'avatar2';
             await prefs.setBool('is_unlock_avatar2', true);
             break;
           case 8:
+            avatarKey = 'avatar1';
             await prefs.setBool('is_unlock_avatar1', true);
             break;
           case 30:
+            avatarKey = 'avatar5';
             await prefs.setBool('is_unlock_avatar5', true);
             break;
           case 38:
+            avatarKey = 'avatar3';
             await prefs.setBool('is_unlock_avatar3', true);
             break;
         }
-        String avatarKey = 'is_unlock_${task['rewardName']}';
-        await prefs.setBool(avatarKey, true);
+        await prefs.setBool('is_unlock_$avatarKey', true);
+
+        // Show popup for unlocked avatar
+        _showUnlockPopup('New Avatar Unlocked!', avatarKey);
       } else if (task['rewardType'] == 'Frame') {
+        String frameKey = '';
         switch (task['id']) {
           case 9:
+            frameKey = 'frame5';
             await prefs.setBool('is_unlock_frame5', true);
             break;
           case 26:
+            frameKey = 'frame3';
             await prefs.setBool('is_unlock_frame3', true);
             break;
           case 31:
+            frameKey = 'frame2';
             await prefs.setBool('is_unlock_frame2', true);
             break;
         }
+
+        // Show popup for unlocked frame
+        _showUnlockPopup('New Frame Unlocked!', frameKey);
       }
 
       // Mark the task as collected
@@ -181,6 +195,52 @@ class _TaskScreenState extends State<TaskScreen> {
         tasks = tasks.where((t) => t['id'] != taskId).toList();
       });
     }
+  }
+
+  void _showUnlockPopup(String title, String assetKey) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.darkGray,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage(
+                  'Assets/${assetKey.startsWith('a') ? 'Avatars' : 'Frames'}/$assetKey.${assetKey.startsWith('a') ? 'jpg' : 'png'}', // Adjust path based on asset key
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Congratulations! You have unlocked a new ${assetKey.startsWith('A') ? 'Avatar' : 'Frame'}',
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
