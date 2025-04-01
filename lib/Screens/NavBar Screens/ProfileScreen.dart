@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Screens/Onboarding/OnboardingScreen1.dart';
+import 'package:nofap/Screens/Premium/Premium.dart';
 import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:nofap/Theme/colors.dart' show AppColors;
 import 'package:nofap/Providers/AuthProvider.dart' as LocalAuthProvider;
@@ -245,7 +246,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: InkWell(
                 splashColor: AppColors.mediumGray.withOpacity(0.2),
                 highlightColor: AppColors.mediumGray.withOpacity(0.1),
-                onTap: () {},
+                onTap: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                    builder: (context) => Premium(),
+                  );
+                  Navigator.push(context, route);
+                },
                 child: ListTile(
                   title: Text(
                     "Purchase Premium Version",

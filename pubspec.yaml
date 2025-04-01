@@ -54,3 +54,11 @@ flutter:
     - Assets/Lottie/heartbeat.json
     - Assets/Lottie/done.json
     - Assets/Lottie/streak.json
+    - Assets/Lottie/journaling.json
+    - Assets/Lottie/meditation.json
+    - Assets/Lottie/stretching.json
+    - Assets/Icons/block.png
+    - Assets/Icons/gift.png
+    - Assets/Icons/support.png
+    - Assets/Icons/trophy.png
+    - Assets/Icons/verified.png
