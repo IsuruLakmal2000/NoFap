@@ -11,6 +11,7 @@ import 'package:nofap/Widgets/HomeScreen/TimeWidget.dart';
 import 'package:nofap/Widgets/HomeScreen/WeeklyPointChart.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:nofap/Widgets/CustomAppBar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
     print("check first time -" + isFirstTime.toString());
-    username = prefs.getString('username') ?? '';
+    username = prefs.getString('userName') ?? 'Guest';
     if (isFirstTime) {
       print("yes first time");
       _showStreakPopup();
@@ -79,71 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.lightGray,
-        toolbarHeight: 100,
-        title: Consumer<FirebaseSignInAuthProvider>(
-          builder: (context, authProvider, child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.local_fire_department_sharp,
-                      size: 60,
-                      color: AppColors.red,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          username ?? 'Guest',
-                          style: TextStyle(
-                            color: AppColors.darkGray,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          "$currentStreak Days",
-                          style: TextStyle(
-                            color: AppColors.darkGray,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Consumer<AuthProvider>(
-                  builder: (context, authProvider, child) {
-                    return Row(
-                      children: [
-                        Text(
-                          "${authProvider.currentUserPoints}",
-                          style: TextStyle(
-                            color: AppColors.darkGray,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Icon(
-                          Icons.star_outlined,
-                          size: 30,
-                          color: AppColors.darkGray,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

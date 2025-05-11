@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', newUsername);
+    await prefs.setString('userName', newUsername);
     setState(() {
       username = newUsername;
     });

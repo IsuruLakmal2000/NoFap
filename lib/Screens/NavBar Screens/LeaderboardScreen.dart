@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Theme/colors.dart';
+import 'package:nofap/Widgets/CustomAppBar.dart';
 import 'package:nofap/Widgets/LeaderBoard%20screen/LeaderboardWidget.dart';
 import 'package:nofap/Widgets/LeaderBoard%20screen/TaskScreen.dart';
 import 'package:nofap/Services/FirebaseDatabaseService.dart';
@@ -39,7 +40,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
 
   Future<void> _loadUserPoints() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    username = prefs.getString('username') ?? 'Guest';
+    username = prefs.getString('userName') ?? 'Guest';
     setState(() {
       userPoints = prefs.getInt("userPoints") ?? 0;
     });
@@ -72,6 +73,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       ); // Fallback if not initialized
     }
     return Scaffold(
+      //appBar: CustomAppBar(),
       appBar: AppBar(
         backgroundColor: AppColors.lightGray,
         toolbarHeight: 100,
@@ -137,7 +139,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         ),
         bottom: TabBar(
           controller: _tabController,
-          tabs: [Tab(text: "Task Page"), Tab(text: "Leaderboard")],
+          tabs: [Tab(text: "Leaderboard"), Tab(text: "Tasks")],
           labelColor: AppColors.darkGray,
           indicatorColor: AppColors.red,
         ),
@@ -145,8 +147,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          TaskScreen(),
           Leaderboardwidget(leaderboardUsers: leaderboardUsers),
+          TaskScreen(),
         ],
       ),
     );

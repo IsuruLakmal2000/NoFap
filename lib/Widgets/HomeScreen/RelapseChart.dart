@@ -6,14 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RelapseChart extends StatefulWidget {
   const RelapseChart({Key? key}) : super(key: key);
 
-  static Future<void> saveRelapseDate(DateTime relapseDate) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? relapseDateStrings =
-        prefs.getStringList('relapseDates') ?? [];
-    relapseDateStrings.add(relapseDate.toIso8601String());
-    await prefs.setStringList('relapseDates', relapseDateStrings);
-  }
-
   @override
   State<RelapseChart> createState() => _RelapseChartState();
 }
@@ -31,12 +23,21 @@ class _RelapseChartState extends State<RelapseChart> {
     getOldestRelapsedDate();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("RelapseChart didChangeDependencies called");
-    _loadData();
-    getOldestRelapsedDate();
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   print("RelapseChart didChangeDependencies called");
+  //   _loadData();
+  //   getOldestRelapsedDate();
+  // }
+  Future<void> saveRelapseDate(DateTime relapseDate) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? relapseDateStrings =
+        prefs.getStringList('relapseDates') ?? [];
+    relapseDateStrings.add(relapseDate.toIso8601String());
+    await prefs.setStringList('relapseDates', relapseDateStrings);
+    await _loadData();
+    await getOldestRelapsedDate();
   }
 
   Future<void> _loadData() async {
@@ -95,8 +96,8 @@ class _RelapseChartState extends State<RelapseChart> {
           startDate.month,
           startDate.day,
         );
-        await RelapseChart.saveRelapseDate(normalizedStartDate);
-        _loadData();
+        await saveRelapseDate(normalizedStartDate);
+
         print("No relapse dates found, saved start date as first.");
       } else {
         print("No start date found to initialize relapse chart.");

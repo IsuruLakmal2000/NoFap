@@ -111,6 +111,79 @@ class FirebaseDatabaseService {
     }
   }
 
+  Future<void> addComment({
+    required String postId,
+    required String username,
+    required String content,
+  }) async {
+    try {
+      final String commentId = DateTime.now().millisecondsSinceEpoch.toString();
+      print("Adding comment to post ID: $postId");
+      await _dbRef.child('posts/$postId/comments/$commentId').set({
+        'username': username,
+        'content': content,
+        'timestamp': DateTime.now().toIso8601String(),
+      });
+      print("Comment added successfully to post ID: $postId");
+    } catch (e) {
+      print("Error adding comment: $e");
+      throw e;
+    }
+  }
+
+  Future<void> addPost({
+    required String postId,
+    required String userName,
+    required String content,
+    required String userAvatar,
+    required String userFrame,
+    int likeCount = 0,
+  }) async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        print("Adding post with ID: $postId");
+        await _dbRef.child('posts/$postId').set({
+          'postId': postId,
+          'userId': user.uid,
+          'content': content,
+          'userAvatar': userAvatar,
+          'userName': userName,
+          'userFrame': userFrame,
+          'likeCount': likeCount,
+          'timestamp': DateTime.now().toIso8601String(),
+        });
+        print("Post added successfully with ID: $postId");
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error adding post: $e");
+      throw e;
+    }
+  }
+
+  Future<void> deletePost(String postId) async {
+    try {
+      print("Deleting post with ID: $postId");
+      await _dbRef.child('posts/$postId').remove();
+      print("Post deleted successfully with ID: $postId");
+    } catch (e) {
+      print("Error deleting post: $e");
+      throw e;
+    }
+  }
+
+  Stream<DatabaseEvent> getPosts() {
+    try {
+      print("Fetching posts from database...");
+      return _dbRef.child('posts').orderByChild('timestamp').onValue;
+    } catch (e) {
+      print("Error fetching posts: $e");
+      throw e;
+    }
+  }
+
   Stream<DatabaseEvent> getUserData() {
     final user = _auth.currentUser;
     if (user != null) {
@@ -144,6 +217,16 @@ class FirebaseDatabaseService {
     } catch (e) {
       print("Error fetching leaderboard data: $e");
       return [];
+    }
+  }
+
+  Stream<DatabaseEvent> getComments(String postId) {
+    try {
+      print("Fetching comments for post ID: $postId");
+      return _dbRef.child('posts/$postId/comments').onValue;
+    } catch (e) {
+      print("Error fetching comments: $e");
+      throw e;
     }
   }
 }
