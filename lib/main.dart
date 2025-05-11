@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
 import 'package:nofap/Providers/ChartPointsProvider.dart';
@@ -9,10 +10,12 @@ import 'package:nofap/Reposoteries/FirebaseSignInAuthRepo.dart';
 import 'package:provider/provider.dart';
 import 'routes.dart';
 import 'theme/theme.dart'; // Import the theme
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   final userProvider = UserProvider();
   await userProvider.loadUserData();
 

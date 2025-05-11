@@ -1,50 +1,35 @@
 {
   "project_info": {
-    "project_number": "775453438826",
-    "firebase_url": "https://nofap-6ea59-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "nofap-6ea59",
-    "storage_bucket": "nofap-6ea59.firebasestorage.app"
+    "project_number": "685393279527",
+    "firebase_url": "https://fapfree-d9d86-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fapfree-d9d86",
+    "storage_bucket": "fapfree-d9d86.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775453438826:android:349784c3b78e94c671ab13",
+        "mobilesdk_app_id": "1:685393279527:android:4692982e697244fda8ac02",
         "android_client_info": {
           "package_name": "com.example.nofap"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775453438826-bhc0ikh03kkh4i618hrq4m97f9ft3ipr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.nofap",
-            "certificate_hash": "98f8a046edbaa1eea7c301ff723b8fb407d3a87a"
-          }
-        },
-        {
-          "client_id": "775453438826-bgqg2j66rag242mbsv43d91mc2ee8mfr.apps.googleusercontent.com",
+          "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD77PQgDcSbl15QiWcylo6v3xtNiEMbF3g"
+          "current_key": "AIzaSyCnybAFd2GV7BCXvfvyB2H7RZaYbrfcBsE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "775453438826-bgqg2j66rag242mbsv43d91mc2ee8mfr.apps.googleusercontent.com",
+              "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "775453438826-54ctpplteajedp6p3bgcnvm6foh44hdr.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.nofap"
-              }
             }
           ]
         }

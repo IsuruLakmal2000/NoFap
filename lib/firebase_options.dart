@@ -44,10 +44,12 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD77PQgDcSbl15QiWcylo6v3xtNiEMbF3g',
-    appId: '1:775453438826:android:349784c3b78e94c671ab13',
-    messagingSenderId: '775453438826',
-    projectId: 'nofap-6ea59',
-    storageBucket: 'nofap-6ea59.firebasestorage.app',
+    apiKey: 'AIzaSyCnybAFd2GV7BCXvfvyB2H7RZaYbrfcBsE',
+    appId: '1:685393279527:android:4692982e697244fda8ac02',
+    messagingSenderId: '685393279527',
+    projectId: 'fapfree-d9d86',
+    databaseURL: 'https://fapfree-d9d86-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'fapfree-d9d86.firebasestorage.app',
   );
+
 }

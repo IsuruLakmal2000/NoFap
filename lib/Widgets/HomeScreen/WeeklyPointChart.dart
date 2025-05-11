@@ -65,7 +65,7 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width * 0.9;
+    double screenWidth = MediaQuery.of(context).size.width * 0.95;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.lightGray,
@@ -85,94 +85,126 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(height: 16),
+            ),
             _pointsData.isNotEmpty
                 ? SizedBox(
                   height: 260, // Set the height for the chart
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: LineChart(
-                      LineChartData(
-                        lineTouchData: LineTouchData(
-                          enabled: true,
-                          touchTooltipData: LineTouchTooltipData(
-                            getTooltipItems: (List<LineBarSpot> touchedSpots) {
-                              return touchedSpots.map((spot) {
-                                return LineTooltipItem(
-                                  '${spot.y.toInt()} points',
-                                  TextStyle(
-                                    color: AppColors.white,
-                                    fontWeight: FontWeight.bold,
+                  child: LineChart(
+                    LineChartData(
+                      lineTouchData: LineTouchData(
+                        enabled: true,
+                        touchTooltipData: LineTouchTooltipData(
+                          getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                            return touchedSpots.map((spot) {
+                              return LineTooltipItem(
+                                '${spot.y.toInt()} points',
+                                TextStyle(
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            }).toList();
+                          },
+                          getTooltipColor: (LineBarSpot spot) => AppColors.red,
+                        ),
+                      ),
+                      gridData: FlGridData(show: false),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1, // Ensure labels are shown for each day
+                            reservedSize:
+                                20, // Increase reserved size for bottom titles
+                            getTitlesWidget: (value, meta) {
+                              // Map the x-axis value to the corresponding date
+                              int index = value.toInt();
+                              if (index >= 0 && index < _pointsData.length) {
+                                DateTime date = _pointsData.keys.elementAt(
+                                  index,
+                                );
+                                return Text(
+                                  "${date.day}/${date.month}", // Format as "day/month"
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.mediumGray,
                                   ),
                                 );
-                              }).toList();
+                              }
+                              return const SizedBox.shrink(); // Return empty widget for invalid indices
                             },
-                            getTooltipColor:
-                                (LineBarSpot spot) => AppColors.darkGray,
                           ),
                         ),
-                        gridData: FlGridData(show: false),
-                        titlesData: FlTitlesData(
-                          show: true,
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: true),
-                          ),
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              interval:
-                                  (_pointsData.isNotEmpty
-                                      ? ((_pointsData.values.reduce(
-                                                (a, b) => a > b ? a : b,
-                                              ) /
-                                              5)
-                                          .ceilToDouble()
-                                          .clamp(
-                                            1,
-                                            double.infinity,
-                                          )) // Ensure interval is at least 1
-                                      : 10), // Dynamically calculate interval
-                              getTitlesWidget:
-                                  (value, meta) => Text(
-                                    value.toInt().toString(),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.mediumGray,
-                                    ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval:
+                                (_pointsData.isNotEmpty
+                                    ? ((_pointsData.values.reduce(
+                                              (a, b) => a > b ? a : b,
+                                            ) /
+                                            5)
+                                        .ceilToDouble()
+                                        .clamp(1, double.infinity))
+                                    : 10), // Dynamically calculate interval
+                            getTitlesWidget:
+                                (value, meta) => Text(
+                                  value.toInt().toString(),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.mediumGray,
                                   ),
-                              reservedSize: 30, // Space for y-axis titles
-                            ),
-                          ),
-                          rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
+                                ),
+                            reservedSize: 30, // Space for y-axis titles
                           ),
                         ),
-                        borderData: FlBorderData(show: true),
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots:
-                                _pointsData.entries.map((entry) {
-                                  DateTime date = entry.key;
-                                  int points = entry.value;
-                                  return FlSpot(
-                                    date.day.toDouble(),
-                                    points.toDouble(),
-                                  );
-                                }).toList(),
-                            isCurved: true,
-                            color: AppColors.darkGray2,
-                            barWidth: 2,
-                            belowBarData: BarAreaData(
-                              show: false,
-                              color: const Color.fromARGB(255, 170, 170, 170),
-                            ),
-                          ),
-                        ],
+                        rightTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                       ),
+                      borderData: FlBorderData(show: true),
+                      minY: 0, // Ensure the chart starts from 0
+                      maxY:
+                          (_pointsData.isNotEmpty
+                              ? _pointsData.values.reduce(
+                                    (a, b) => a > b ? a : b,
+                                  ) +
+                                  5
+                              : 10), // Add padding to the top for better spacing
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots:
+                              _pointsData.entries.toList().asMap().entries.map((
+                                entry,
+                              ) {
+                                int index =
+                                    entry
+                                        .key; // Normalize index for x-axis (0 to 6)
+                                int points = entry.value.value;
+                                return FlSpot(
+                                  index.toDouble(),
+                                  points.toDouble(),
+                                );
+                              }).toList(),
+                          isCurved: false,
+
+                          color: const Color.fromARGB(255, 0, 153, 25),
+                          barWidth: 2,
+                          belowBarData: BarAreaData(
+                            show: false,
+                            color: const Color.fromARGB(255, 170, 170, 170),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )

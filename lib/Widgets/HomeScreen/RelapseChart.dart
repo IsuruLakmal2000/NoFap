@@ -8,13 +8,9 @@ class RelapseChart extends StatefulWidget {
 
   static Future<void> saveRelapseDate(DateTime relapseDate) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     List<String>? relapseDateStrings =
         prefs.getStringList('relapseDates') ?? [];
     relapseDateStrings.add(relapseDate.toIso8601String());
-    // if (prefs.getString('streakStartDate') != null) {
-    //   relapseDateStrings.add(prefs.getString('streakStartDate')!);
-    // }
     await prefs.setStringList('relapseDates', relapseDateStrings);
   }
 
@@ -30,19 +26,24 @@ class _RelapseChartState extends State<RelapseChart> {
   @override
   void initState() {
     super.initState();
+    print("RelapseChart initState called");
     _loadData();
     getOldestRelapsedDate();
-    // RelapseChart.saveRelapseDate(DateTime(2025, 3, 10));
-    // RelapseChart.saveRelapseDate(DateTime(2025, 3, 5));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("RelapseChart didChangeDependencies called");
+    _loadData();
+    getOldestRelapsedDate();
   }
 
   Future<void> _loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? startDateString = prefs.getString('streakStartDate');
-    //await prefs.remove('relapseDates');
 
     if (startDateString != null) {
-      // Parse the start date string and normalize it
       DateTime startDate = DateTime.parse(startDateString);
       DateTime normalizedStartDate = DateTime(
         startDate.year,
@@ -51,9 +52,11 @@ class _RelapseChartState extends State<RelapseChart> {
       );
       setState(() {
         _streakStartDate = normalizedStartDate;
-        _relapseData[normalizedStartDate] =
-            true; // Add normalized start date as a relapse date
+        _relapseData[normalizedStartDate] = true;
       });
+      for (var date in _relapseData.keys) {
+        print("relapse dates ---" + date.toString());
+      }
     }
 
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
@@ -61,7 +64,7 @@ class _RelapseChartState extends State<RelapseChart> {
       setState(() {
         _relapseData.addAll({
           for (var date in relapseDateStrings)
-            DateTime.parse(date).toLocal(): true, // Normalize relapse dates
+            DateTime.parse(date).toLocal(): true,
         });
       });
     }
@@ -72,36 +75,40 @@ class _RelapseChartState extends State<RelapseChart> {
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
 
     if (relapseDateStrings != null) {
-      print('relapse adt');
-      // Parse the dates and find the oldest one
+      print('relapse adt------' + relapseDateStrings.toString());
       List<DateTime> relapseDates =
           relapseDateStrings
               .map((dateString) => DateTime.parse(dateString))
               .toList();
-      relapseDates.sort(); // Sort dates in ascending order
-      DateTime oldestRelapseDate = relapseDates.first;
-      _oldestRelapseDate = oldestRelapseDate;
-      // Store the oldest relapse date in a variable
+      relapseDates.sort();
+      if (relapseDates.isNotEmpty) {
+        DateTime oldestRelapseDate = relapseDates.first;
+        _oldestRelapseDate = oldestRelapseDate;
+        print("Oldest relapse date: $oldestRelapseDate");
+      }
     } else {
       String? startDateString = prefs.getString('streakStartDate');
-      DateTime startDate = DateTime.parse(startDateString!);
-      DateTime normalizedStartDate = DateTime(
-        startDate.year,
-        startDate.month,
-        startDate.day,
-      );
-      RelapseChart.saveRelapseDate(normalizedStartDate);
-      _loadData();
-      print("No relapse dates found.");
+      if (startDateString != null) {
+        DateTime startDate = DateTime.parse(startDateString);
+        DateTime normalizedStartDate = DateTime(
+          startDate.year,
+          startDate.month,
+          startDate.day,
+        );
+        await RelapseChart.saveRelapseDate(normalizedStartDate);
+        _loadData();
+        print("No relapse dates found, saved start date as first.");
+      } else {
+        print("No start date found to initialize relapse chart.");
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     DateTime today = DateTime.now();
-    double screenWidth = MediaQuery.of(context).size.width * 0.9;
+    double screenWidth = MediaQuery.of(context).size.width * 0.95;
 
-    // Generate last 30 days and normalize to remove time
     List<DateTime> days =
         List.generate(
           30,
@@ -112,14 +119,11 @@ class _RelapseChartState extends State<RelapseChart> {
           ).subtract(Duration(days: index)),
         ).reversed.toList();
 
-    // Get the first day's weekday (0 = Monday, 6 = Sunday)
     int startWeekday = days.first.weekday % 7;
-
-    // Weekday labels
     List<String> weekLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
         width: screenWidth,
         decoration: BoxDecoration(
@@ -139,8 +143,6 @@ class _RelapseChartState extends State<RelapseChart> {
                 ),
               ),
               SizedBox(height: 8),
-
-              // Day Labels (Sun, Mon, ...)
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Row(
@@ -170,14 +172,13 @@ class _RelapseChartState extends State<RelapseChart> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7, // 7 columns for a weekly structure
+                    crossAxisCount: 7,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 4,
                   ),
                   itemCount: days.length + startWeekday,
                   itemBuilder: (context, index) {
                     if (index < startWeekday) {
-                      // Empty space before first day
                       return Container();
                     }
 
@@ -188,40 +189,44 @@ class _RelapseChartState extends State<RelapseChart> {
                       day.day,
                     );
                     bool isRelapseDay = _relapseData[normalizedDay] ?? false;
-
                     bool isToday =
                         day.year == today.year &&
                         day.month == today.month &&
                         day.day == today.day;
-
                     bool isBeforeStreakStart =
                         _streakStartDate != null &&
                         day.isBefore(_streakStartDate!);
                     bool isBeforeOldestRelapse =
                         _oldestRelapseDate != null &&
                         day.isBefore(_oldestRelapseDate!);
+
+                    print(
+                      "Day: $day, "
+                      "isBeforeStreakStart: $isBeforeStreakStart, "
+                      "isBeforeOldestRelapse: $isBeforeOldestRelapse, "
+                      "isToday: $isToday, "
+                      "isRelapseDay: $isRelapseDay",
+                    );
+
                     return Container(
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
                         color:
                             isToday
-                                ? Colors.grey[300] // Default color for today
+                                ? Colors.grey[300]
                                 : isRelapseDay
-                                ? Colors
-                                    .red // Relapsed
+                                ? Colors.red
                                 : isBeforeOldestRelapse
                                 ? Colors.grey[300]
                                 : isBeforeStreakStart
-                                ? Colors
-                                    .green // No relapse
-                                : Colors.green, // No relapse
-
+                                ? Colors.green
+                                : Colors.green,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Center(
                         child: Text(
-                          "${day.day}", // Display the day number
+                          "${day.day}",
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,

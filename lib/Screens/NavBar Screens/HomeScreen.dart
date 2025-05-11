@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int streakDays = 0;
   int userPoints = 0;
   late String username = '';
+  String relapseChartKey = UniqueKey().toString(); // Add and initialize the key
 
   @override
   void initState() {
@@ -41,8 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _checkFirstTimeUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+    print("check first time -" + isFirstTime.toString());
     username = prefs.getString('username') ?? '';
     if (isFirstTime) {
+      print("yes first time");
       _showStreakPopup();
     } else {
       // Calculate current streak based on saved start date
@@ -65,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onSave: (selectedStreak) {
             setState(() {
               currentStreak = selectedStreak;
+              relapseChartKey = UniqueKey().toString();
             });
           },
         );
@@ -145,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Timewidget(),
             SizedBox(height: 20),
-            RelapseChart(),
+            RelapseChart(
+              key: Key(relapseChartKey),
+            ), // Pass the Key to RelapseChart
             SizedBox(height: 20),
             WeeklyPointsChart(),
           ],

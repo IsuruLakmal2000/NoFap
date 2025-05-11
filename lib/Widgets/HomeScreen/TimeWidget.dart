@@ -70,7 +70,7 @@ class _TimewidgetState extends State<Timewidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 0),
+      padding: const EdgeInsets.only(left: 6, right: 6, top: 16, bottom: 0),
       child: Column(
         children: [
           SizedBox(

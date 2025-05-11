@@ -1,0 +1,423 @@
+[
+  {
+    "id": 1,
+    "title": "Stay strong for 5 minutes",
+    "description": "Resist for at least 5 minutes.",
+    "progress": 0,
+    "goal": 5,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10
+  },
+  {
+    "id": 2,
+    "title": "Stay strong for 30 minutes",
+    "description": "Resist for at least 30 minutes.",
+    "progress": 0,
+    "goal": 30,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
+  },
+  {
+    "id": 3,
+    "title": "Daily Login",
+    "description": "Login once today.",
+    "progress": 1,
+    "goal": 1,
+    "showProgress": false,
+    "rewardType": "points",
+    "rewardAmount": 10
+  },
+  {
+    "id": 4,
+    "title": "Stay strong for 1 hour",
+    "description": "Resist for at least 1 hour.",
+    "progress": 0,
+    "goal": 1,
+    "showProgress": true,
+    "rewardType": "Avatar",
+    "rewardAmount": 1
+  },
+  {
+    "id": 5,
+    "title": "Stay strong for 2 hours",
+    "description": "Resist for at least 2 hours.",
+    "progress": 0,
+    "goal": 2,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 100
+  },
+  {
+    "id": 6,
+    "title": "Stay strong for 5 hours",
+    "description": "Resist for at least 5 hours.",
+    "progress": 0,
+    "goal": 5,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 150
+  },
+  {
+    "id": 7,
+    "title": "Stay strong for 15 hours",
+    "description": "Resist for at least 15 hours.",
+    "progress": 0,
+    "goal": 15,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 200
+  },
+  {
+    "id": 8,
+    "title": "Stay strong for 1 day",
+    "description": "Resist for at least 1 day.",
+    "progress": 0,
+    "goal": 1,
+    "showProgress": true,
+    "rewardType": "Avatar",
+    "rewardAmount": 1
+  },
+  {
+    "id": 9,
+    "title": "Stay strong for 2 days",
+    "description": "Resist for at least 2 days.",
+    "progress": 0,
+    "goal": 2,
+    "showProgress": true,
+    "rewardType": "Frame",
+    "rewardAmount": 1
+  },
+  {
+    "id": 10,
+    "title": "Stay strong for 5 days",
+    "description": "Resist for at least 5 days.",
+    "progress": 0,
+    "goal": 5,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 400
+  },
+  {
+    "id": 11,
+    "title": "Stay strong for 10 days",
+    "description": "Resist for at least 10 days.",
+    "progress": 0,
+    "goal": 10,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 500
+  },
+  {
+    "id": 12,
+    "title": "Stay strong for 20 days",
+    "description": "Resist for at least 20 days.",
+    "progress": 0,
+    "goal": 20,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 800
+  },
+  {
+    "id": 13,
+    "title": "Stay strong for 30 days",
+    "description": "Resist for at least 30 days.",
+    "progress": 0,
+    "goal": 30,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 1000
+  },
+  {
+    "id": 14,
+    "title": "Stay strong for 50 days",
+    "description": "Resist for at least 50 days.",
+    "progress": 0,
+    "goal": 50,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 2000
+  },
+  {
+    "id": 15,
+    "title": "Stay strong for 75 days",
+    "description": "Resist for at least 75 days.",
+    "progress": 0,
+    "goal": 75,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 3000
+  },
+  {
+    "id": 16,
+    "title": "Stay strong for 100 days",
+    "description": "Resist for at least 100 days.",
+    "progress": 0,
+    "goal": 100,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 4000
+  },
+  {
+    "id": 17,
+    "title": "Stay strong for 200 days",
+    "description": "Resist for at least 200 days.",
+    "progress": 0,
+    "goal": 200,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 6000
+  },
+  {
+    "id": 18,
+    "title": "Stay strong for 300 days",
+    "description": "Resist for at least 300 days.",
+    "progress": 0,
+    "goal": 300,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10000
+  },
+  {
+    "id": 19,
+    "title": "Post 1 time in the community",
+    "description": "Make 1 post in the community.",
+    "progress": 0,
+    "goal": 1,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10
+  },
+  {
+    "id": 20,
+    "title": "Post 3 times in the community",
+    "description": "Make 3 posts in the community.",
+    "progress": 0,
+    "goal": 3,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 20
+  },
+  {
+    "id": 21,
+    "title": "Post 5 times in the community",
+    "description": "Make 5 posts in the community.",
+    "progress": 0,
+    "goal": 5,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 30
+  },
+  {
+    "id": 22,
+    "title": "Post 10 times in the community",
+    "description": "Make 10 posts in the community.",
+    "progress": 0,
+    "goal": 10,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
+  },
+  {
+    "id": 23,
+    "title": "Post 50 times in the community",
+    "description": "Make 50 posts in the community.",
+    "progress": 0,
+    "goal": 50,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 500
+  },
+  {
+    "id": 24,
+    "title": "Earn 100 points",
+    "description": "Accumulate a total of 100 points.",
+    "progress": 0,
+    "goal": 100,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
+  },
+  {
+    "id": 25,
+    "title": "Earn 500 points",
+    "description": "Accumulate a total of 500 points.",
+    "progress": 0,
+    "goal": 500,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
+  },
+  {
+    "id": 26,
+    "title": "Earn 1500 points",
+    "description": "Accumulate a total of 1500 points.",
+    "progress": 0,
+    "goal": 1500,
+    "showProgress": true,
+    "rewardType": "Frame",
+    "rewardAmount": 1
+  },
+  {
+    "id": 27,
+    "title": "Earn 2500 points",
+    "description": "Accumulate a total of 2500 points.",
+    "progress": 0,
+    "goal": 2500,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 200
+  },
+  {
+    "id": 28,
+    "title": "Earn 5000 points",
+    "description": "Accumulate a total of 5000 points.",
+    "progress": 0,
+    "goal": 5000,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 500
+  },
+  {
+    "id": 29,
+    "title": "Earn 10000 points",
+    "description": "Accumulate a total of 10000 points.",
+    "progress": 0,
+    "goal": 10000,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 1000
+  },
+  {
+    "id": 30,
+    "title": "Earn 15000 points",
+    "description": "Accumulate a total of 15000 points.",
+    "progress": 0,
+    "goal": 15000,
+    "showProgress": true,
+    "rewardType": "Avatar",
+    "rewardAmount": 1
+  },
+  {
+    "id": 31,
+    "title": "Earn 25000 points",
+    "description": "Accumulate a total of 25000 points.",
+    "progress": 0,
+    "goal": 25000,
+    "showProgress": true,
+    "rewardType": "Frame",
+    "rewardAmount": 1
+  },
+  {
+    "id": 32,
+    "title": "React to 1 post",
+    "description": "Add a reaction to 1 post from others.",
+    "progress": 0,
+    "goal": 1,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10
+  },
+  {
+    "id": 33,
+    "title": "React to 5 posts",
+    "description": "Add reactions to 5 posts from others.",
+    "progress": 0,
+    "goal": 5,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 10
+  },
+  {
+    "id": 34,
+    "title": "React to 10 posts",
+    "description": "Add reactions to 10 posts from others.",
+    "progress": 0,
+    "goal": 10,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 50
+  },
+  {
+    "id": 35,
+    "title": "React to 20 posts",
+    "description": "Add reactions to 20 posts from others.",
+    "progress": 0,
+    "goal": 20,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 100
+  },
+  {
+    "id": 36,
+    "title": "React to 40 posts",
+    "description": "Add reactions to 40 posts from others.",
+    "progress": 0,
+    "goal": 40,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 200
+  },
+  {
+    "id": 37,
+    "title": "React to 70 posts",
+    "description": "Add reactions to 70 posts from others.",
+    "progress": 0,
+    "goal": 70,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 400
+  },
+  {
+    "id": 38,
+    "title": "React to 120 posts",
+    "description": "Add reactions to 120 posts from others.",
+    "progress": 0,
+    "goal": 120,
+    "showProgress": true,
+    "rewardType": "Avatar",
+    "rewardAmount": 1
+  },
+  {
+    "id": 39,
+    "title": "React to 175 posts",
+    "description": "Add reactions to 175 posts from others.",
+    "progress": 0,
+    "goal": 175,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 650
+  },
+  {
+    "id": 40,
+    "title": "React to 250 posts",
+    "description": "Add reactions to 250 posts from others.",
+    "progress": 0,
+    "goal": 250,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 900
+  },
+  {
+    "id": 41,
+    "title": "React to 500 posts",
+    "description": "Add reactions to 500 posts from others.",
+    "progress": 0,
+    "goal": 500,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 1500
+  },
+
+  {
+    "id": 42,
+    "title": "React to 1000 posts",
+    "description": "Add reactions to 1000 posts from others.",
+    "progress": 0,
+    "goal": 1000,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 3000
+  }
+]

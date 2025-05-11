@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'dart:async';
+import 'package:nofap/Services/IAPService.dart';
+import 'package:nofap/UI/ProductListScreen.dart';
 
 class Premium extends StatefulWidget {
   const Premium({super.key});
@@ -16,6 +18,7 @@ class _PremiumState extends State<Premium> {
   );
   late Timer _timer;
   int _currentPage = 0;
+  final IAPService _iapService = IAPService();
 
   @override
   void initState() {
@@ -181,8 +184,19 @@ class _PremiumState extends State<Premium> {
                   Stack(
                     children: [
                       OutlinedButton(
-                        onPressed: () {
-                          // Handle yearly purchase
+                        onPressed: () async {
+                          try {
+                            await _iapService.buyAnnualSubscription();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Annual subscription purchased!"),
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Purchase failed: $e")),
+                            );
+                          }
                         },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(color: AppColors.darkGray, width: 2),
@@ -228,8 +242,21 @@ class _PremiumState extends State<Premium> {
                   Stack(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          // Handle monthly purchase
+                        onPressed: () async {
+                          try {
+                            await _iapService.buyMonthlySubscription();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "Monthly subscription purchased!",
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Purchase failed: $e")),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.red,
@@ -274,8 +301,20 @@ class _PremiumState extends State<Premium> {
                   ),
                   SizedBox(height: 10),
                   OutlinedButton(
-                    onPressed: () {
-                      // Handle lifetime purchase
+                    onPressed: () async {
+                      try {
+                        MaterialPageRoute(
+                          builder: (context) => ProductListScreen(),
+                        );
+                        // await _iapService.buyLifetimePlan();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Lifetime plan purchased!")),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Purchase failed: $e")),
+                        );
+                      }
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: AppColors.darkGray, width: 2),
