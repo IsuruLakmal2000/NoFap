@@ -378,8 +378,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 
   Future<bool> _filterPostContent(String content) async {
-    final String apiKey =
-        "AIzaSyBLK-6gfPj_aVuHUG_iPX-KVkRG1zx5aVE"; // Replace with your API key
+    final String apiKey = "sample api"; // Replace with your API key
     final String geminiApiUrl =
         "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=$apiKey"; // Replace with the correct endpoint
 
