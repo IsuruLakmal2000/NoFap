@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/CustomButton.dart';
 import 'package:nofap/routes.dart';
@@ -30,8 +31,13 @@ class OnboardingScreen3 extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset('Assets/coupleenjoy.png', height: 400),
-            SizedBox(height: 20),
+            Lottie.asset(
+              "Assets/Lottie/onboard1.json",
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: 300,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 10),
             Text(
               'Our Solution',
               style: TextStyle(

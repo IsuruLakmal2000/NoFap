@@ -13,6 +13,7 @@ dependencies:
   fl_chart: ^0.70.2
   flutter:
     sdk: flutter
+  google_fonts: ^6.2.1
   google_nav_bar: ^5.0.7
   google_sign_in: ^6.3.0
   in_app_purchase: ^3.2.1
@@ -60,6 +61,10 @@ flutter:
     - Assets/Lottie/meditation.json
     - Assets/Lottie/stretching.json
     - Assets/Lottie/music.json
+    - Assets/Lottie/onboard1.json
+    - Assets/Lottie/onboard2.json
+    - Assets/Lottie/onboard4.json
+    - Assets/Lottie/onboard5.json
     - Assets/Icons/block.png
     - Assets/Icons/gift.png
     - Assets/Icons/support.png

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'colors.dart';
 
 class AppTheme {
@@ -7,6 +8,7 @@ class AppTheme {
       primaryColor: AppColors.blue,
       canvasColor: AppColors.white,
       scaffoldBackgroundColor: AppColors.white,
+      textTheme: GoogleFonts.latoTextTheme(),
       appBarTheme: AppBarTheme(
         color: AppColors.blue,
         titleTextStyle: TextStyle(
@@ -25,10 +27,10 @@ class AppTheme {
       //   buttonColor: AppColors.blue,
       //   textTheme: ButtonTextTheme.primary,
       // ),
-      textTheme: TextTheme(
-        bodyLarge: TextStyle(color: AppColors.darkGray),
-        bodyMedium: TextStyle(color: AppColors.mediumGray),
-      ),
+      // textTheme: TextTheme(
+      //   bodyLarge: TextStyle(color: AppColors.darkGray),
+      //   bodyMedium: TextStyle(color: AppColors.mediumGray),
+      // ),
       colorScheme: ColorScheme.light(
         primary: AppColors.blue,
         primaryContainer: AppColors.lightGray,

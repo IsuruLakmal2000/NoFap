@@ -147,6 +147,11 @@ class TaskUtils {
         progress = prefs.getInt('postReactionsCount') ?? 0;
         break;
 
+      case 43: // Purchased Premium Version
+        bool isPremiumPurchased = prefs.getBool('isPremiumPurchased') ?? false;
+        progress = isPremiumPurchased ? 1 : 0;
+        break;
+
       default:
         break;
     }

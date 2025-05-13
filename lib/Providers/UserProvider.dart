@@ -6,6 +6,7 @@ class UserProvider extends ChangeNotifier {
   String displayUsername = '';
   String avatarId = 'none';
   String frameId = 'none';
+
   int currentPoints = 0;
 
   final FirebaseDatabaseService _dbService = FirebaseDatabaseService();
@@ -38,14 +39,22 @@ class UserProvider extends ChangeNotifier {
     String frame,
     int points,
     int streakDays,
+    bool isPerchasePremium,
   ) async {
-    print("inside save data---");
     displayUsername = username;
     avatarId = avatar;
     frameId = frame;
     currentPoints = points;
-    await _dbService.saveUserData(username, avatar, frame, points, streakDays);
-    print("user data saved00000000000000");
+    isPerchasePremium = isPerchasePremium;
+    await _dbService.saveUserData(
+      username,
+      avatar,
+      frame,
+      points,
+      streakDays,
+      isPerchasePremium,
+    );
+
     notifyListeners();
   }
 }

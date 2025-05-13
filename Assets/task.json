@@ -409,7 +409,6 @@
     "rewardType": "points",
     "rewardAmount": 1500
   },
-
   {
     "id": 42,
     "title": "React to 1000 posts",
@@ -419,5 +418,15 @@
     "showProgress": true,
     "rewardType": "points",
     "rewardAmount": 3000
+  },
+  {
+    "id": 43,
+    "title": "Purchased Premium Version",
+    "description": "Unlock the premium version of the app.",
+    "progress": 0,
+    "goal": 1,
+    "showProgress": true,
+    "rewardType": "points",
+    "rewardAmount": 2000
   }
 ]

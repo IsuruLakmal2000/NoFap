@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Providers/UserProvider.dart';
 import 'package:nofap/Widgets/CustomButton.dart';
@@ -34,7 +35,7 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
 
     final username = _nameController.text.trim();
     prefs.setString('userName', username);
-    await userProvider.saveUserData(username, "none", "none", 0, 0);
+    await userProvider.saveUserData(username, "none", "none", 0, 0, false);
   }
 
   void _onNextPressed(BuildContext context) async {
@@ -110,7 +111,12 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(height: 60),
-                        Image.asset('Assets/couple.png', height: 200),
+                        Lottie.asset(
+                          "Assets/Lottie/onboard5.json",
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: 300,
+                          fit: BoxFit.contain,
+                        ),
                         SizedBox(height: 20),
                         Text(
                           'Join Us',

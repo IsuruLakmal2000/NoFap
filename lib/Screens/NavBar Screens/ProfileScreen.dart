@@ -20,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
+  bool isPremiumPurchased = false;
 
   @override
   void initState() {
@@ -30,7 +31,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _loadUsername() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username') ?? 'Guest';
+      username = prefs.getString('userName') ?? 'Guest';
+      isPremiumPurchased = prefs.getBool('isPremiumPurchased') ?? false;
     });
   }
 
@@ -108,13 +110,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: RadialGradient(
                 colors: [
+                  const Color.fromARGB(255, 255, 231, 195),
                   const Color.fromARGB(255, 255, 255, 255),
-                  const Color.fromARGB(255, 245, 245, 245),
                 ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                center: Alignment.center,
+                radius: 1.0,
               ),
             ),
           ),
@@ -155,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             radius: 55,
                             backgroundColor: Colors.transparent,
                             backgroundImage:
-                                avatarProvider.currentAvatar != null
+                                avatarProvider.currentFrame != "none"
                                     ? AssetImage(
                                       "Assets/Frames/${avatarProvider.currentFrame}.png",
                                     )
@@ -178,6 +180,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      isPremiumPurchased
+                          ? Icon(Icons.verified, color: Colors.blue, size: 20)
+                          : SizedBox.shrink(),
                     ],
                   ),
                   SizedBox(height: 5),
@@ -252,14 +257,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(context, route);
                 },
                 child: ListTile(
-                  title: Text(
-                    "Purchase Premium Version",
-                    style: TextStyle(
-                      color: AppColors.darkGray,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  title:
+                      isPremiumPurchased
+                          ? Row(
+                            children: [
+                              Text(
+                                "You are a Premium User",
+                                style: TextStyle(
+                                  color: AppColors.darkGray,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(
+                                Icons.verified,
+                                color: Colors.blue,
+                                size: 20,
+                              ),
+                            ],
+                          )
+                          : Text(
+                            "Purchase Premium Version",
+                            style: TextStyle(
+                              color: AppColors.darkGray,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: AppColors.darkGray,

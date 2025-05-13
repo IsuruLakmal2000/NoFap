@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nofap/Models/CommunityPost.dart';
-import 'package:nofap/Screens/CommentScreen.dart';
+import 'package:nofap/Widgets/Community%20screen/CommentScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nofap/Theme/colors.dart';
+import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostWidget extends StatefulWidget {
   final CommunityPost post;
@@ -23,16 +25,33 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
   bool isLiked = false; // Track the like status
+  final FirebaseDatabaseService _firebaseService = FirebaseDatabaseService();
 
-  void _toggleLike() {
+  void _toggleLike() async {
+    final prefs = await SharedPreferences.getInstance();
+    int likeCount = prefs.getInt('postReactionsCount') ?? 0;
+    likeCount++;
+
     setState(() {
       isLiked = !isLiked;
       if (isLiked) {
         widget.post.likeCount++;
+        likeCount++;
       } else {
         widget.post.likeCount--;
+        likeCount--;
       }
     });
+    await prefs.setInt('postReactionsCount', likeCount);
+    try {
+      // Update the like count in the database
+      await _firebaseService.updatePostLikeCount(
+        postId: widget.post.id,
+        likeCount: widget.post.likeCount,
+      );
+    } catch (e) {
+      print('Error updating like count: $e');
+    }
   }
 
   @override
@@ -61,15 +80,19 @@ class _PostWidgetState extends State<PostWidget> {
                     CircleAvatar(
                       radius: 26,
                       backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage(
-                        "Assets/Frames/${widget.post.frameUrl}.png",
-                      ),
+                      backgroundImage:
+                          widget.post.frameUrl != "none"
+                              ? AssetImage(
+                                "Assets/Frames/${widget.post.frameUrl}.png",
+                              )
+                              : null,
                     ),
                   ],
                 ),
                 SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     Text(
                       widget.post.username,

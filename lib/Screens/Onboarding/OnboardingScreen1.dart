@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/CustomButton.dart';
 import 'package:nofap/routes.dart';
@@ -32,7 +33,12 @@ class OnboardingScreen1 extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            Image.asset('Assets/skating.png', height: 400),
+            Lottie.asset(
+              "Assets/Lottie/onboard2.json",
+              height: MediaQuery.of(context).size.height * 0.5,
+
+              fit: BoxFit.contain,
+            ),
             SizedBox(height: 20),
             Text(
               'Welcome to NoFap',

@@ -84,7 +84,7 @@ class Leaderboardwidget extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 20,
+                            radius: 25,
                             backgroundColor: AppColors.lightGray,
                             backgroundImage:
                                 isCurrentUser
@@ -96,7 +96,7 @@ class Leaderboardwidget extends StatelessWidget {
                                     ),
                           ),
                           CircleAvatar(
-                            radius: 30,
+                            radius: 33,
                             backgroundColor: Colors.transparent, // Frame color
                             backgroundImage:
                                 isCurrentUser
@@ -114,12 +114,27 @@ class Leaderboardwidget extends StatelessWidget {
                 ],
               ),
               dense: false,
-              title: Text(
-                user.username,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              title: Row(
+                children: [
+                  Text(
+                    user.username,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  if (user.isPerchasePremium)
+                    Icon(Icons.verified, size: 16, color: AppColors.blue),
+                ],
               ),
-              subtitle: Text(
-                'Streak: ${user.currentStreakStartDate.isNotEmpty ? DateTime.now().difference(DateTime.tryParse(user.currentStreakStartDate) ?? DateTime(1970, 1, 1)).inDays : '0'} days',
+              subtitle: Row(
+                children: [
+                  Icon(
+                    Icons.local_fire_department,
+                    size: 16,
+                    color: AppColors.red,
+                  ),
+                  Text(
+                    '${user.currentStreakStartDate.isNotEmpty ? DateTime.now().difference(DateTime.tryParse(user.currentStreakStartDate) ?? DateTime(1970, 1, 1)).inDays : '0'} days',
+                  ),
+                ],
               ),
             ),
           );

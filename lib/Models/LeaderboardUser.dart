@@ -4,6 +4,7 @@ class LeaderboardUser {
   final int currentPoints;
   final String avatarId;
   final String frameId;
+  final bool isPerchasePremium;
   String? userId; // Added userId field
 
   LeaderboardUser({
@@ -12,6 +13,7 @@ class LeaderboardUser {
     required this.currentPoints,
     required this.avatarId,
     required this.frameId,
+    required this.isPerchasePremium,
     this.userId,
   });
 
@@ -22,6 +24,8 @@ class LeaderboardUser {
       currentPoints: data['currentPoints'] ?? 0,
       avatarId: data['avatarId'] ?? '',
       frameId: data['frameId'] ?? '',
+
+      isPerchasePremium: data['isPerchasePremium'] ?? false,
     );
   }
 }

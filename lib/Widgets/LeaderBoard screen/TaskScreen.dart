@@ -87,6 +87,19 @@ class _TaskScreenState extends State<TaskScreen> {
         }
       }
 
+      if (task['id'] == 43) {
+        // Handle Purchased Premium Version task
+        bool isPremiumPurchased = prefs.getBool('isPremiumPurchased') ?? false;
+        if (isPremiumPurchased) {
+          isCollected = false;
+          collectedTaskIds.remove(task['id']);
+          await prefs.setStringList(
+            'collectedTaskIds',
+            collectedTaskIds.map((id) => id.toString()).toList(),
+          );
+        }
+      }
+
       setState(() {
         task['progress'] = progress;
         taskCompleted[task['id']] = progress >= task['goal'] && !isCollected;

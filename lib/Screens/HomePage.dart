@@ -42,6 +42,8 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         duration: Duration(milliseconds: 400),
         tabBackgroundColor: AppColors.darkGray,
+        tabBorderRadius: 0,
+
         color: Colors.black,
         tabs: [
           GButton(icon: Icons.home, text: 'Home'),

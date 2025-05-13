@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nofap/Theme/colors.dart';
 import 'package:nofap/Widgets/CustomButton.dart';
 import 'package:nofap/routes.dart';
@@ -30,7 +31,13 @@ class OnboardingScreen2 extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset('Assets/sit.png', height: 400),
+            SizedBox(height: 50),
+            Lottie.asset(
+              "Assets/Lottie/onboard4.json",
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: 300,
+              fit: BoxFit.contain,
+            ),
             SizedBox(height: 20),
             Text(
               'The Challenge We Face',
@@ -49,14 +56,15 @@ class OnboardingScreen2 extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
-                      Icons.align_vertical_bottom_rounded,
-                      size: 36,
-                      color: AppColors.darkGray2,
-                    ),
+                    // Icon(
+                    //   Icons.align_vertical_bottom_rounded,
+                    //   size: 36,
+                    //   color: AppColors.darkGray2,
+                    // ),
                     SizedBox(width: 8),
                     Expanded(
                       child: RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
                             TextSpan(
@@ -92,10 +100,11 @@ class OnboardingScreen2 extends StatelessWidget {
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(Icons.hail, size: 36, color: AppColors.darkGray2),
+                    // Icon(Icons.hail, size: 36, color: AppColors.darkGray2),
                     SizedBox(width: 8),
                     Expanded(
                       child: RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
                             TextSpan(
@@ -123,18 +132,19 @@ class OnboardingScreen2 extends StatelessWidget {
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(
-                      Icons.monitor_heart_rounded,
-                      size: 36,
-                      color: AppColors.darkGray2,
-                    ),
+                    // Icon(
+                    //   Icons.monitor_heart_rounded,
+                    //   size: 36,
+                    //   color: AppColors.darkGray2,
+                    // ),
                     SizedBox(width: 10),
                     Expanded(
                       child: RichText(
+                        textAlign: TextAlign.center,
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Research shows that breaking free can',
+                              text: 'Breaking free from these habits can ',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: AppColors.darkGray2,
@@ -142,10 +152,10 @@ class OnboardingScreen2 extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: ' improve mental clarity and focus.',
+                              text: 'boost your confidence and self-esteem.',
                               style: TextStyle(
-                                fontSize: 16,
-                                color: const Color.fromARGB(255, 27, 169, 54),
+                                fontSize: 20,
+                                color: const Color.fromARGB(255, 34, 179, 58),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

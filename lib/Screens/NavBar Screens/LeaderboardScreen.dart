@@ -142,6 +142,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
           tabs: [Tab(text: "Leaderboard"), Tab(text: "Tasks")],
           labelColor: AppColors.darkGray,
           indicatorColor: AppColors.red,
+          unselectedLabelColor: AppColors.mediumGray,
+          unselectedLabelStyle: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+          ),
+
+          labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: TabBarView(
