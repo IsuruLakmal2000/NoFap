@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:nofap/Providers/AuthProvider.dart';
 import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
@@ -15,7 +16,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await dotenv.load(fileName: ".env");
   final userProvider = UserProvider();
   await userProvider.loadUserData();
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:nofap/Models/CommunityPost.dart';
 import 'package:nofap/Widgets/CustomAppBar.dart';
 import 'package:nofap/Widgets/Community%20screen/PostWidget.dart';
@@ -6,7 +8,6 @@ import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'dart:convert'; // For JSON encoding/decoding
-import 'package:http/http.dart' as http;
 
 class CommunityScreen extends StatefulWidget {
   @override
@@ -17,6 +18,27 @@ class _CommunityScreenState extends State<CommunityScreen> {
   final FirebaseDatabaseService _firebaseService = FirebaseDatabaseService();
 
   List<CommunityPost> posts = [];
+
+  final List<String> inappropriateWords = [
+    "fuck",
+    "fucked",
+    "bitch",
+    "nigga",
+    "motherfucker",
+    "asshole",
+    "suck",
+
+    // Add more inappropriate words here
+  ];
+
+  bool _containsInappropriateWords(String content) {
+    for (String word in inappropriateWords) {
+      if (content.toLowerCase().contains(word)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   Future<void> _addPost(String content) async {
     final String postId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -322,6 +344,20 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Post content cannot be empty!'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    // Check for inappropriate words
+                    if (_containsInappropriateWords(controller.text.trim())) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Your post contains inappropriate words. Please revise and try again.',
+                          ),
+                          backgroundColor: Colors.red,
                         ),
                       );
                       return;
@@ -335,8 +371,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Your post was rejected due to inappropriate content. Please revise and try again.',
+                            'Your post was rejected due to invalid or not related content. Please revise and try again.',
                           ),
+                          backgroundColor: Colors.red,
                         ),
                       );
                       return;
@@ -378,47 +415,57 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 
   Future<bool> _filterPostContent(String content) async {
-    final String apiKey = "sample api"; // Replace with your API key
-    final String geminiApiUrl =
-        "https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=$apiKey"; // Replace with the correct endpoint
+    final String apiKey = dotenv.env['PITBULL_X'] ?? '';
+
+    final model = GenerativeModel(
+      model: 'gemini-1.5-flash-latest',
+      apiKey: apiKey,
+    );
+
+    // Check if the model is initialized
 
     try {
-      print("Filtering post content: $content");
-      final response = await http.post(
-        Uri.parse(geminiApiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          "instances": [
-            {
-              "content": content,
-              "parameters": {
-                "prompt":
-                    "Does the post content make sense? Yes or No. "
-                    "Does this content include bad words? Yes or No. "
-                    "This is a NoFap app, so does this content demotivate users? Yes or No.",
-              },
-            },
-          ],
-        }),
-      );
+      final prompt =
+          "Analyze the following text and determine if it is suitable for a NoFap community forum. Provide your response as a JSON object.\n\n"
+          "Text: '$content'\n\n"
+          "Your response should be a JSON object with the following keys and values:\n"
+          "- 'isMeaningful': (true/false) -  Is the text coherent and relevant to nofap community?\n"
+          // "- 'hasBadWords': (true/false) - Does the text contain profanity or offensive language?\n"
+          "Example Response:\n"
+          "{\n"
+          "  \"isMeaningful\": true,\n"
+          // "  \"hasBadWords\": false,\n"
+          "}\n"
+          "Ensure the JSON response is on a single line, without any extra text before or after the JSON structure."; //Improved prompt
 
-      if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        final predictions = jsonResponse['predictions'][0];
-        final isMeaningful = predictions['isMeaningful'] == "Yes";
-        final hasBadWords = predictions['hasBadWords'] == "No";
-        final isMotivational = predictions['isMotivational'] == "Yes";
+      final response = await model.generateContent([Content.text(prompt)]);
 
-        print("JSON response from Gemini: $jsonResponse");
+      if (response.text == null) {
+        print("Error: Gemini API returned null response text.");
+        return false; // Or handle the null case as appropriate for your app
+      }
+
+      print("Raw response text: ${response.text}"); // Print the raw response
+
+      // Attempt to decode the response.text
+      try {
+        final Map<String, dynamic> jsonResponse = jsonDecode(response.text!);
+
+        // Extract values from the JSON response.  Handle nulls.
+        final bool isMeaningful = jsonResponse['isMeaningful'] ?? false;
+        // final bool hasBadWords =
+        //     !(jsonResponse['hasBadWords'] ?? true); // Corrected logic
+        // final bool isMotivational = jsonResponse['isMotivational'] ?? false;
+
+        print("isMeaningful: $isMeaningful");
+
+        return isMeaningful;
+      } catch (e) {
+        print("Error decoding JSON: $e");
         print(
-          "isMeaningful: $isMeaningful, hasBadWords: $hasBadWords, isMotivational: $isMotivational",
-        );
-
-        // Allow post only if all conditions are met
-        return isMeaningful && hasBadWords && isMotivational;
-      } else {
-        print("Error: ${response.statusCode} - ${response.body}");
-        return false;
+          "Full response: ${response.text}",
+        ); // Print full response to debug
+        return false; // Handle JSON decoding errors
       }
     } catch (e) {
       print("Error filtering post content: $e");
