@@ -227,15 +227,16 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 (prefs.getInt(todayKey) ?? 0) <= 3) {
               _showAddPostDialog();
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
-                  ),
-                  backgroundColor: Colors.red,
-                  duration: Duration(seconds: 3),
-                ),
-              );
+              _showAddPostDialog();
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     content: Text(
+              //       'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
+              //     ),
+              //     backgroundColor: Colors.red,
+              //     duration: Duration(seconds: 3),
+              //   ),
+              // );
             }
           },
           backgroundColor: Colors.transparent,
@@ -251,6 +252,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
     String selectedPost = ''; // Track the selected example post
     int currentStreak = 0;
     int nextMilestone = 0;
+    const int maxCharacters = 300; // Set max character limit
+    int currentCharacterCount = 0;
 
     // Fetch the current streak from SharedPreferences
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -285,6 +288,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       setState(() {
                         selectedPost = examplePosts[0];
                         controller.text = selectedPost;
+                        currentCharacterCount = selectedPost.length;
                       });
                     },
                     child: Container(
@@ -321,6 +325,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       setState(() {
                         selectedPost = examplePosts[1];
                         controller.text = selectedPost;
+                        currentCharacterCount = selectedPost.length;
                       });
                     },
                     child: Container(
@@ -354,9 +359,17 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   // Custom Post TextField
                   TextField(
                     controller: controller,
+                    maxLength: maxCharacters, // Set max length
+                    onChanged: (value) {
+                      setState(() {
+                        currentCharacterCount = value.length;
+                      });
+                    },
                     decoration: InputDecoration(
                       hintText: 'Write your custom post here...',
                       border: OutlineInputBorder(),
+                      counterText:
+                          '$currentCharacterCount/$maxCharacters characters used', // Show character count
                     ),
                     maxLines: 3,
                   ),

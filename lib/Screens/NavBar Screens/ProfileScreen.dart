@@ -5,6 +5,7 @@ import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
 import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:nofap/Screens/Onboarding/OnboardingScreen1.dart';
 import 'package:nofap/Screens/Premium/Premium.dart';
+import 'package:nofap/Screens/PrivacyPolicyScreen.dart';
 import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:nofap/Theme/colors.dart' show AppColors;
 import 'package:nofap/Providers/AuthProvider.dart' as LocalAuthProvider;
@@ -395,8 +396,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Navigate to Notification Setting screen
             },
           ),
+
           SizedBox(height: 10),
           Divider(color: AppColors.mediumGray),
+          SizedBox(height: 10),
+          _buildProfileOption(
+            title: 'Privacy Policy',
+            leadingIcon: Icons.privacy_tip_outlined,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()),
+              );
+            },
+          ),
           SizedBox(height: 10),
           _buildProfileOption(
             title: 'Help & Support',
