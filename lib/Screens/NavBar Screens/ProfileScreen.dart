@@ -21,6 +21,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
   bool isPremiumPurchased = false;
+  int currentStreak = 0;
 
   @override
   void initState() {
@@ -33,6 +34,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       username = prefs.getString('userName') ?? 'Guest';
       isPremiumPurchased = prefs.getBool('isPremiumPurchased') ?? false;
+      String? startDateString = prefs.getString('streakStartDate');
+      if (startDateString != null) {
+        DateTime startDate = DateTime.parse(startDateString);
+        currentStreak = DateTime.now().difference(startDate).inDays;
+      }
     });
   }
 
@@ -186,23 +192,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                   SizedBox(height: 5),
+
                   Consumer<LocalAuthProvider.AuthProvider>(
                     builder: (context, authProvider, child) {
                       return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.local_fire_department,
+                                size: 20,
+                                color: AppColors.red,
+                              ),
+                              Text(
+                                '${currentStreak} days',
+                                style: TextStyle(
+                                  color: AppColors.darkGray,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                           Text(
-                            "${authProvider.currentUserPoints}",
+                            isPremiumPurchased ? "Premium user" : "Free user",
                             style: TextStyle(
-                              color: AppColors.darkGray,
+                              color:
+                                  isPremiumPurchased
+                                      ? const Color.fromARGB(255, 255, 153, 1)
+                                      : AppColors.darkGray2,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
-                          Icon(
-                            Icons.star_outlined,
-                            size: 22,
-                            color: AppColors.yellow,
+                          Row(
+                            children: [
+                              Text(
+                                "${authProvider.currentUserPoints}",
+                                style: TextStyle(
+                                  color: AppColors.darkGray,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Icon(
+                                Icons.star_outlined,
+                                size: 22,
+                                color: AppColors.yellow,
+                              ),
+                            ],
                           ),
                         ],
                       );

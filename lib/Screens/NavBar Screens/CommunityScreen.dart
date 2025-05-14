@@ -18,6 +18,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   final FirebaseDatabaseService _firebaseService = FirebaseDatabaseService();
 
   List<CommunityPost> posts = [];
+  bool isLoading = true; // Add loading state
 
   final List<String> inappropriateWords = [
     "fuck",
@@ -166,8 +167,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
             );
           }).toList();
 
+      // Sort posts by timestamp in descending order
+      loadedPosts.sort(
+        (a, b) =>
+            DateTime.parse(b.timestamp).compareTo(DateTime.parse(a.timestamp)),
+      );
+
       setState(() {
         posts = loadedPosts;
+        isLoading = false; // Set loading to false after posts are loaded
       });
     });
   }
@@ -176,21 +184,26 @@ class _CommunityScreenState extends State<CommunityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      body: ListView.builder(
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
-          final post = posts[index];
-          final timeAgo = timeago.format(
-            DateTime.parse(post.timestamp),
-          ); // Use timestamp
-          return PostWidget(
-            post: post,
-            timeAgo: timeAgo,
-            onDelete: () => _deletePost(post.id),
-            onComment: () => _showCommentsDialog(post.id),
-          );
-        },
-      ),
+      body:
+          isLoading
+              ? Center(
+                child: CircularProgressIndicator(),
+              ) // Show loading indicator
+              : ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  final post = posts[index];
+                  final timeAgo = timeago.format(
+                    DateTime.parse(post.timestamp),
+                  ); // Use timestamp
+                  return PostWidget(
+                    post: post,
+                    timeAgo: timeAgo,
+                    onDelete: () => _deletePost(post.id),
+                    onComment: () => _showCommentsDialog(post.id),
+                  );
+                },
+              ),
       floatingActionButton: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -204,8 +217,26 @@ class _CommunityScreenState extends State<CommunityScreen> {
           ),
         ),
         child: FloatingActionButton(
-          onPressed: () {
-            _showAddPostDialog();
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            String todayKey =
+                "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}_communityPosts";
+            bool isPremiumUser = prefs.getBool("isPremiumPurchased") ?? false;
+            if (isPremiumUser ||
+                prefs.getInt(todayKey) == null ||
+                (prefs.getInt(todayKey) ?? 0) <= 3) {
+              _showAddPostDialog();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
+                  ),
+                  backgroundColor: Colors.red,
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            }
           },
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -378,30 +409,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       );
                       return;
                     }
-
-                    // Proceed with saving the post
-                    String todayKey =
-                        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}_communityPosts";
-                    bool isPremiumUser =
-                        prefs.getBool("isPremiumPurchased") ?? false;
-
-                    if (isPremiumUser) {
-                      _addPost(controller.text.trim());
-                    } else if (prefs.getInt(todayKey) == null ||
-                        (prefs.getInt(todayKey) ?? 0) <= 3) {
-                      _addPost(controller.text.trim());
-                      prefs.setInt(todayKey, 1);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
-                          ),
-                          duration: Duration(seconds: 3),
-                        ),
-                      );
-                    }
-
+                    _addPost(controller.text.trim());
                     Navigator.pop(context);
                   },
                   child: Text('Post'),

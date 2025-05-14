@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nofap/Models/CommunityPost.dart';
 import 'package:nofap/Services/FirebaseDatabaseService.dart';
 import 'package:nofap/theme/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class CommentScreen extends StatefulWidget {
@@ -43,10 +44,13 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   Future<void> _addComment(String content) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       await _firebaseService.addComment(
         postId: widget.post.id,
-        username: 'Current User', // Replace with actual username
+        username:
+            prefs.getString("userName") ??
+            "user", // Replace with actual username
         content: content,
       );
       _controller.clear();
