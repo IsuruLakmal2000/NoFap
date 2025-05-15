@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Providers/AuthProvider.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Widgets/CustomAppBar.dart';
-import 'package:nofap/Widgets/LeaderBoard%20screen/LeaderboardWidget.dart';
-import 'package:nofap/Widgets/LeaderBoard%20screen/TaskScreen.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
-import 'package:nofap/Models/LeaderboardUser.dart';
+import 'package:FapFree/Providers/AuthProvider.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Widgets/CustomAppBar.dart';
+import 'package:FapFree/Widgets/LeaderBoard%20screen/LeaderboardWidget.dart';
+import 'package:FapFree/Widgets/LeaderBoard%20screen/TaskScreen.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Models/LeaderboardUser.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

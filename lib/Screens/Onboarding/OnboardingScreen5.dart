@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Providers/AuthProvider.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
+import 'package:FapFree/Providers/AuthProvider.dart';
+import 'package:FapFree/Widgets/CustomButton.dart';
 
 import '../../routes.dart';
 

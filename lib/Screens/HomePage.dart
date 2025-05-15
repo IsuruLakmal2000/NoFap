@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import 'package:nofap/Screens/NavBar%20Screens/CommunityScreen.dart';
-import 'package:nofap/Screens/NavBar%20Screens/HomeScreen.dart';
+import 'package:FapFree/Screens/NavBar%20Screens/CommunityScreen.dart';
+import 'package:FapFree/Screens/NavBar%20Screens/HomeScreen.dart';
 
-import 'package:nofap/Screens/NavBar%20Screens/LeaderboardScreen.dart';
-import 'package:nofap/Screens/NavBar%20Screens/ProfileScreen.dart';
-import 'package:nofap/theme/colors.dart';
+import 'package:FapFree/Screens/NavBar%20Screens/LeaderboardScreen.dart';
+import 'package:FapFree/Screens/NavBar%20Screens/ProfileScreen.dart';
+import 'package:FapFree/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
   @override

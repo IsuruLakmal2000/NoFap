@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Screens/HomePage.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen1.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen2.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen3.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen4.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen5.dart';
+import 'package:FapFree/Screens/HomePage.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen1.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen2.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen3.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen4.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen5.dart';
 
 class AppRoutes {
   static const String onboarding1 = '/onboarding1';

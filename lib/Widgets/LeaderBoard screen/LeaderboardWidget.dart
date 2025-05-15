@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
-import 'package:nofap/theme/colors.dart';
-import 'package:nofap/Models/LeaderboardUser.dart';
+import 'package:FapFree/Providers/AvatarAndFrameProvider.dart';
+import 'package:FapFree/theme/colors.dart';
+import 'package:FapFree/Models/LeaderboardUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'package:nofap/Providers/AuthProvider.dart' as LocalAuthProvider;
+import 'package:FapFree/Providers/AuthProvider.dart' as LocalAuthProvider;
 
 class Leaderboardwidget extends StatefulWidget {
   final List<LeaderboardUser> leaderboardUsers;

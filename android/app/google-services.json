@@ -8,12 +8,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:685393279527:android:b91930a84d695458a8ac02",
+        "android_client_info": {
+          "package_name": "com.circularx.fapfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685393279527-qvrjkigrush41gg08kjjh92re3c45svj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.circularx.fapfree",
+            "certificate_hash": "466e3f816156c3ab16ea6eefff67b187503b83ef"
+          }
+        },
+        {
+          "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnybAFd2GV7BCXvfvyB2H7RZaYbrfcBsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:685393279527:android:4692982e697244fda8ac02",
         "android_client_info": {
           "package_name": "com.example.nofap"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "685393279527-6a2g0r4jkkjlv91gd438lv6ij5suqf22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nofap",
+            "certificate_hash": "466e3f816156c3ab16ea6eefff67b187503b83ef"
+          }
+        },
         {
           "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
           "client_type": 3

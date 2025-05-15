@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
-import 'package:nofap/routes.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Widgets/CustomButton.dart';
+import 'package:FapFree/routes.dart';
 
 class OnboardingScreen1 extends StatelessWidget {
   const OnboardingScreen1({super.key});
@@ -41,7 +41,7 @@ class OnboardingScreen1 extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              'Welcome to NoFap',
+              'Welcome to FapFree',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
-import 'package:nofap/routes.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Widgets/CustomButton.dart';
+import 'package:FapFree/routes.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
   const OnboardingScreen3({super.key});

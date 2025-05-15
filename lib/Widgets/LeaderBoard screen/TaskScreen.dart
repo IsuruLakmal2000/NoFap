@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:nofap/Providers/AuthProvider.dart';
+import 'package:FapFree/Providers/AuthProvider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofap/theme/colors.dart';
+import 'package:FapFree/theme/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:confetti/confetti.dart';
-import 'package:nofap/Utils/TaskUtils.dart';
+import 'package:FapFree/Utils/TaskUtils.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -158,8 +158,8 @@ class _TaskScreenState extends State<TaskScreen> {
             await prefs.setBool('is_unlock_avatar5', true);
             break;
           case 38:
-            avatarKey = 'avatar3';
-            await prefs.setBool('is_unlock_avatar3', true);
+            avatarKey = 'avatar6';
+            await prefs.setBool('is_unlock_avatar6', true);
             break;
         }
         await prefs.setBool('is_unlock_$avatarKey', true);

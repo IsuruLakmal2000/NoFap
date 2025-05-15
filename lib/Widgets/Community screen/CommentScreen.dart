@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Models/CommunityPost.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
-import 'package:nofap/theme/colors.dart';
+import 'package:FapFree/Models/CommunityPost.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

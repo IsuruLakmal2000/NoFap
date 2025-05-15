@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
-import 'package:nofap/theme/colors.dart'; // Import Lottie package
+import 'package:FapFree/Widgets/CustomButton.dart';
+import 'package:FapFree/theme/colors.dart'; // Import Lottie package
 
 class BreathingExerciseScreen extends StatefulWidget {
   @override

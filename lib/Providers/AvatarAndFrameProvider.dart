@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 class AvatarAndFrameProvider with ChangeNotifier {
   String _currentAvatar = "none"; // Default avatar
@@ -21,7 +21,7 @@ class AvatarAndFrameProvider with ChangeNotifier {
 
   Future<void> _loadFrameFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _currentFrame = prefs.getString('currentFrame') ?? "none";
+    _currentFrame = prefs.getString('a') ?? "none";
     notifyListeners();
   }
 

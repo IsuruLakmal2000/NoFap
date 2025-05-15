@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:nofap/Providers/AuthProvider.dart';
-import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
-import 'package:nofap/Providers/ChartPointsProvider.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart'; // Import the FirebaseSignInAuthProvider
+import 'package:FapFree/Providers/AuthProvider.dart';
+import 'package:FapFree/Providers/AvatarAndFrameProvider.dart';
+import 'package:FapFree/Providers/ChartPointsProvider.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart'; // Import the FirebaseSignInAuthProvider
 import 'package:firebase_core/firebase_core.dart';
-import 'package:nofap/Providers/UserProvider.dart';
-import 'package:nofap/Reposoteries/FirebaseSignInAuthRepo.dart';
+import 'package:FapFree/Providers/UserProvider.dart';
+import 'package:FapFree/Reposoteries/FirebaseSignInAuthRepo.dart';
 import 'package:provider/provider.dart';
 import 'routes.dart';
 import 'theme/theme.dart'; // Import the theme
 import 'firebase_options.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:FapFree/Services/AdMobService.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,9 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   final userProvider = UserProvider();
   await userProvider.loadUserData();
+
+  final adMobService = AdMobService();
+  adMobService.initialize(); // Initialize AdMob
 
   runApp(const MainApp());
 }

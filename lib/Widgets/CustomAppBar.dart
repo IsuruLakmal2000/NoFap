@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Providers/AuthProvider.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Theme/colors.dart';
+import 'package:FapFree/Providers/AuthProvider.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:FapFree/Theme/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

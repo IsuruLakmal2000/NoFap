@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:nofap/Models/CommunityPost.dart';
-import 'package:nofap/Widgets/CustomAppBar.dart';
-import 'package:nofap/Widgets/Community%20screen/PostWidget.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Models/CommunityPost.dart';
+import 'package:FapFree/Widgets/CustomAppBar.dart';
+import 'package:FapFree/Widgets/Community%20screen/PostWidget.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'dart:convert'; // For JSON encoding/decoding
+import 'package:FapFree/Services/AdMobService.dart';
 
 class CommunityScreen extends StatefulWidget {
   @override
@@ -16,6 +17,8 @@ class CommunityScreen extends StatefulWidget {
 
 class _CommunityScreenState extends State<CommunityScreen> {
   final FirebaseDatabaseService _firebaseService = FirebaseDatabaseService();
+  final AdMobService _adMobService =
+      AdMobService(); // Add AdMobService instance
 
   List<CommunityPost> posts = [];
   bool isLoading = true; // Add loading state
@@ -133,7 +136,14 @@ class _CommunityScreenState extends State<CommunityScreen> {
   @override
   void initState() {
     super.initState();
+    _adMobService.loadInterstitialAd(); // Load interstitial ad
     _loadPosts();
+  }
+
+  @override
+  void dispose() {
+    _adMobService.dispose(); // Dispose of AdMob resources
+    super.dispose();
   }
 
   void _loadPosts() {
@@ -218,6 +228,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
         ),
         child: FloatingActionButton(
           onPressed: () async {
+            _adMobService.showInterstitialAd(); // Show interstitial ad
             SharedPreferences prefs = await SharedPreferences.getInstance();
             String todayKey =
                 "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}_communityPosts";
@@ -227,16 +238,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 (prefs.getInt(todayKey) ?? 0) <= 3) {
               _showAddPostDialog();
             } else {
-              _showAddPostDialog();
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: Text(
-              //       'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
-              //     ),
-              //     backgroundColor: Colors.red,
-              //     duration: Duration(seconds: 3),
-              //   ),
-              // );
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'You can only post 3 times a day. Upgrade to premium for unlimited posts!',
+                  ),
+                  backgroundColor: Colors.red,
+                  duration: Duration(seconds: 3),
+                ),
+              );
             }
           },
           backgroundColor: Colors.transparent,

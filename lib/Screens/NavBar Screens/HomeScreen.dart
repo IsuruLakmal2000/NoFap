@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Models/TaslModel.dart';
-import 'package:nofap/Providers/AuthProvider.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Screens/PanicScreen.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Widgets/HomeScreen/RelapseChart.dart';
-import 'package:nofap/Widgets/HomeScreen/SetStreakDialog.dart';
-import 'package:nofap/Widgets/HomeScreen/TimeWidget.dart';
-import 'package:nofap/Widgets/HomeScreen/WeeklyPointChart.dart';
+import 'package:FapFree/Models/TaslModel.dart';
+import 'package:FapFree/Providers/AuthProvider.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:FapFree/Screens/PanicScreen.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Widgets/HomeScreen/RelapseChart.dart';
+import 'package:FapFree/Widgets/HomeScreen/SetStreakDialog.dart';
+import 'package:FapFree/Widgets/HomeScreen/TimeWidget.dart';
+import 'package:FapFree/Widgets/HomeScreen/WeeklyPointChart.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofap/Widgets/CustomAppBar.dart';
+import 'package:FapFree/Widgets/CustomAppBar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _checkFirstTimeUser();
     _loadUserPoints();
+    _loadUserPremiumData();
   }
 
   Future<void> _loadUserPoints() async {
@@ -38,6 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       userPoints = authProvider.currentUserPoints;
     });
+  }
+
+  Future<void> _loadUserPremiumData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isPremium = prefs.getBool('isPremiumPurchased') ?? false;
+    if (isPremium) {
+      await prefs.setBool('is_unlock_frame1', true);
+      await prefs.setBool('is_unlock_frame4', true);
+      await prefs.setBool('is_unlock_frame6', true);
+      await prefs.setBool('is_unlock_avatar3', true);
+      await prefs.setBool('is_unlock_avatar4', true);
+      await prefs.setBool('is_unlock_avatar5', true);
+      await prefs.setBool('is_unlock_avatar7', true);
+    }
   }
 
   Future<void> _checkFirstTimeUser() async {

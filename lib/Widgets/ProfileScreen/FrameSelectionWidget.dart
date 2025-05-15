@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Theme/colors.dart';
+import 'package:FapFree/Theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Frameselectionwidget extends StatelessWidget {

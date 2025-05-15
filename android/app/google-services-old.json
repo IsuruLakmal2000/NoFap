@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "685393279527",
+    "firebase_url": "https://fapfree-d9d86-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fapfree-d9d86",
+    "storage_bucket": "fapfree-d9d86.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685393279527:android:4692982e697244fda8ac02",
+        "android_client_info": {
+          "package_name": "com.example.nofap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnybAFd2GV7BCXvfvyB2H7RZaYbrfcBsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685393279527-j4r768llgn4ko37j8tstu00kjnsnu28n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Screens/PanicActivities/JournalingScreen.dart';
-import 'package:nofap/Screens/PanicActivities/MeditationScreen.dart';
-import 'package:nofap/Screens/PanicActivities/MusicScreen.dart';
-import 'package:nofap/Screens/PanicActivities/StretchingScreen.dart';
-import 'package:nofap/Theme/colors.dart';
+import 'package:FapFree/Screens/PanicActivities/JournalingScreen.dart';
+import 'package:FapFree/Screens/PanicActivities/MeditationScreen.dart';
+import 'package:FapFree/Screens/PanicActivities/MusicScreen.dart';
+import 'package:FapFree/Screens/PanicActivities/StretchingScreen.dart';
+import 'package:FapFree/Theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'PanicActivities/BreathingExerciseScreen.dart'; // Import the new widget
 

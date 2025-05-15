@@ -1,16 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nofap/Providers/AvatarAndFrameProvider.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Screens/Onboarding/OnboardingScreen1.dart';
-import 'package:nofap/Screens/Premium/Premium.dart';
-import 'package:nofap/Screens/PrivacyPolicyScreen.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
-import 'package:nofap/Theme/colors.dart' show AppColors;
-import 'package:nofap/Providers/AuthProvider.dart' as LocalAuthProvider;
-import 'package:nofap/Widgets/ProfileScreen/AvatarSelectionWidget.dart';
-import 'package:nofap/Widgets/ProfileScreen/FrameSelectionWidget.dart';
+import 'package:FapFree/Providers/AvatarAndFrameProvider.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:FapFree/Screens/Onboarding/OnboardingScreen1.dart';
+import 'package:FapFree/Screens/Premium/Premium.dart';
+import 'package:FapFree/Screens/PrivacyPolicyScreen.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Theme/colors.dart' show AppColors;
+import 'package:FapFree/Providers/AuthProvider.dart' as LocalAuthProvider;
+import 'package:FapFree/Widgets/ProfileScreen/AvatarSelectionWidget.dart';
+import 'package:FapFree/Widgets/ProfileScreen/FrameSelectionWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -355,7 +355,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 builder:
                     (context) => AvatarSelectionSheet(
                       onAvatarSelected: (String avatar) {
-                        print("av sel=" + avatar);
                         Provider.of<AvatarAndFrameProvider>(
                           context,
                           listen: false,
@@ -394,6 +393,84 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: 'Notification Setting',
             onTap: () {
               // Navigate to Notification Setting screen
+            },
+          ),
+
+          SizedBox(height: 10),
+          _buildProfileOption(
+            title: 'Disable Ads',
+            onTap: () async {
+              final prefs = await SharedPreferences.getInstance();
+              bool hasDisabledAds = prefs.getBool('hasDisabledAds') ?? false;
+              showDialog(
+                context: context,
+                builder: (context) {
+                  bool switchValue = hasDisabledAds;
+                  return StatefulBuilder(
+                    builder: (context, setState) {
+                      return AlertDialog(
+                        title: Text('Disable Ads'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'You can turn off ads for free!\n\n'
+                              'If you enjoy using this app, please consider supporting us by purchasing Premium. Your support is highly appreciated.',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Disable Ads'),
+                                Switch(
+                                  value: switchValue,
+                                  onChanged: (value) async {
+                                    setState(() {
+                                      switchValue = value;
+                                    });
+                                    await prefs.setBool(
+                                      'hasDisabledAds',
+                                      value,
+                                    );
+                                    if (value) {
+                                      // Show a message or perform an action
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Ads disabled successfully!',
+                                          ),
+                                        ),
+                                      );
+                                      Navigator.pop(context);
+                                      MaterialPageRoute route =
+                                          MaterialPageRoute(
+                                            builder: (context) => Premium(),
+                                          );
+
+                                      Navigator.push(context, route);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              );
             },
           ),
 

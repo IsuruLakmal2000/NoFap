@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Theme/colors.dart';
+import 'package:FapFree/Theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AvatarSelectionSheet extends StatelessWidget {
@@ -72,7 +72,7 @@ class AvatarSelectionSheet extends StatelessWidget {
                             break;
                           case 'avatar3':
                             message =
-                                'you can unlock this avatar byReact to 120 posts.';
+                                'Avatar is locked. You can unlock this by purchasing premium version';
                             break;
                           case 'avatar4':
                             message =
@@ -84,7 +84,7 @@ class AvatarSelectionSheet extends StatelessWidget {
                             break;
                           case 'avatar6':
                             message =
-                                'Avatar is locked. You can unlock this by purchasing premium version.';
+                                'Avatar is locked. You can unlock this avatar by reaction to 120 times.';
                             break;
                           case 'avatar7':
                             message =

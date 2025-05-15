@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Models/CommunityPost.dart';
-import 'package:nofap/Widgets/Community%20screen/CommentScreen.dart';
+import 'package:FapFree/Models/CommunityPost.dart';
+import 'package:FapFree/Widgets/Community%20screen/CommentScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostWidget extends StatefulWidget {
@@ -54,6 +54,15 @@ class _PostWidgetState extends State<PostWidget> {
     }
   }
 
+  Future<Map<String, dynamic>?> getUserDataById(String userId) async {
+    try {
+      return await _firebaseService.getUserDataById(userId);
+    } catch (e) {
+      print('Error fetching user data: $e');
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -92,15 +101,40 @@ class _PostWidgetState extends State<PostWidget> {
                 SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
                   children: [
-                    Text(
-                      widget.post.username,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.darkGray2,
-                        fontSize: 18,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          widget.post.username,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.darkGray2,
+                            fontSize: 18,
+                          ),
+                        ),
+                        FutureBuilder<bool>(
+                          future: _firebaseService.getUserPurchasedOrNot(
+                            widget.post.userId,
+                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return SizedBox(width: 0, height: 0);
+                            }
+                            if (snapshot.hasData && snapshot.data == true) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: Icon(
+                                  Icons.verified,
+                                  color: Colors.blue,
+                                  size: 20,
+                                ),
+                              );
+                            }
+                            return SizedBox.shrink();
+                          },
+                        ),
+                      ],
                     ),
                     Text(
                       widget.timeAgo,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Theme/colors.dart';
+import 'package:FapFree/Theme/colors.dart';
 import 'dart:async';
-import 'package:nofap/Services/IAPService.dart';
-import 'package:nofap/UI/ProductListScreen.dart';
+import 'package:FapFree/Services/IAPService.dart';
+import 'package:FapFree/UI/ProductListScreen.dart';
 
 class Premium extends StatefulWidget {
   const Premium({super.key});

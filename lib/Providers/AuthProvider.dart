@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Services/SharedPreferences.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Services/SharedPreferences.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';

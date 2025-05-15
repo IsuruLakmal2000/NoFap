@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Models/TaslModel.dart';
+import 'package:FapFree/Models/TaslModel.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;

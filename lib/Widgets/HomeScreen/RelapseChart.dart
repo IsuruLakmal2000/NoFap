@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nofap/theme/colors.dart';
+import 'package:FapFree/theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RelapseChart extends StatefulWidget {

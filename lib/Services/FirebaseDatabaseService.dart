@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nofap/Models/LeaderboardUser.dart';
+import 'package:FapFree/Models/LeaderboardUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -274,6 +274,35 @@ class FirebaseDatabaseService {
     } catch (e) {
       print("Error updating like count: $e");
       throw e;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserDataById(String userId) async {
+    try {
+      final snapshot = await _dbRef.child('users/$userId').get();
+      if (snapshot.exists) {
+        return Map<String, dynamic>.from(snapshot.value as Map);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Error fetching user data by ID: $e");
+      return null;
+    }
+  }
+
+  Future<bool> getUserPurchasedOrNot(String userId) async {
+    try {
+      final snapshot =
+          await _dbRef.child('users/$userId/isPerchasePremium').get();
+      if (snapshot.exists) {
+        return snapshot.value == true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // print("Error fetching user data by ID: $e"); // Use a logging framework in production
+      return false;
     }
   }
 }

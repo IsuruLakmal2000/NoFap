@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SetStreakDialog extends StatefulWidget {

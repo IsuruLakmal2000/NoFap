@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 class UserProvider extends ChangeNotifier {
   String displayUsername = '';

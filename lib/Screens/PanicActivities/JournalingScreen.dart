@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
-import 'package:nofap/theme/colors.dart';
+import 'package:FapFree/Widgets/CustomButton.dart';
+import 'package:FapFree/theme/colors.dart';
 
 class JournalingScreen extends StatelessWidget {
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nofap/Models/CommunityPost.dart';
-import 'package:nofap/Widgets/Community%20screen/CommentScreen.dart';
+import 'package:FapFree/Models/CommunityPost.dart';
+import 'package:FapFree/Widgets/Community%20screen/CommentScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nofap/Theme/colors.dart';
-import 'package:nofap/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Theme/colors.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 class PostWidget extends StatefulWidget {
   final CommunityPost post;

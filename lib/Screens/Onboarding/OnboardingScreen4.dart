@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nofap/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:nofap/Providers/UserProvider.dart';
-import 'package:nofap/Widgets/CustomButton.dart';
+import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
+import 'package:FapFree/Providers/UserProvider.dart';
+import 'package:FapFree/Widgets/CustomButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nofap/theme/colors.dart';
-import 'package:nofap/routes.dart';
+import 'package:FapFree/theme/colors.dart';
+import 'package:FapFree/routes.dart';
 import 'package:provider/provider.dart';
-import 'package:nofap/Widgets/CustomInputField.dart';
+import 'package:FapFree/Widgets/CustomInputField.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 class OnboardingScreen4 extends StatefulWidget {
   const OnboardingScreen4({super.key});
@@ -30,12 +32,35 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
   Future<void> _saveUserData(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    await prefs.setString('userId', userId);
-    await prefs.setBool('isSignedIn', true);
+    final firebaseDatabaseService = FirebaseDatabaseService();
 
-    final username = _nameController.text.trim();
-    prefs.setString('userName', username);
-    await userProvider.saveUserData(username, "none", "none", 0, 0, false);
+    final userData = await firebaseDatabaseService.getUserDataById(userId);
+
+    if (userData != null) {
+      // User already exists, fetch data and save to SharedPreferences
+      await prefs.setString('userId', userId);
+      await prefs.setBool('isSignedIn', true);
+      await prefs.setString('userName', userData['displayUsername'] ?? '');
+      await prefs.setString('currentAvatar', userData['avatarId'] ?? 'none');
+      await prefs.setString('currentFrame', userData['frameId'] ?? 'none');
+      await prefs.setInt('currentPoints', userData['currentPoints'] ?? 0);
+      await prefs.setInt('currentStreak', userData['streakDays'] ?? 0);
+      await prefs.setBool('isFirstTime', false);
+      await prefs.setBool(
+        'isPremiumPurchased',
+        userData['isPerchasePremium'] ?? false,
+      );
+      if (userData['streakStartDay'] != null) {
+        await prefs.setString('streakStartDate', userData['streakStartDay']);
+      }
+    } else {
+      // User does not exist, save new data
+      final username = _nameController.text.trim();
+      await prefs.setString('userId', userId);
+      await prefs.setBool('isSignedIn', true);
+      await prefs.setString('userName', username);
+      await userProvider.saveUserData(username, "none", "none", 0, 0, false);
+    }
   }
 
   void _onNextPressed(BuildContext context) async {
