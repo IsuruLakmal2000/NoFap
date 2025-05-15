@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:FapFree/Providers/AuthProvider.dart';
 import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:FapFree/Theme/colors.dart';
-import 'package:FapFree/Widgets/CustomAppBar.dart';
 import 'package:FapFree/Widgets/LeaderBoard%20screen/LeaderboardWidget.dart';
 import 'package:FapFree/Widgets/LeaderBoard%20screen/TaskScreen.dart';
 import 'package:FapFree/Services/FirebaseDatabaseService.dart';

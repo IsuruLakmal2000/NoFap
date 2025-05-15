@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:FapFree/Providers/AuthProvider.dart';
 import 'package:FapFree/Widgets/CustomButton.dart';
 
 import '../../routes.dart';

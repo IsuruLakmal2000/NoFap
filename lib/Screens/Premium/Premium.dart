@@ -19,10 +19,46 @@ class _PremiumState extends State<Premium> {
   late Timer _timer;
   int _currentPage = 0;
   final IAPService _iapService = IAPService();
+  String _monthlyPrice = '';
+  String _annualPrice = '';
+
+  List<FeatureRow> get _features => [
+    FeatureRow(
+      iconPath: 'Assets/Icons/block.png',
+      title: "Ad-Free Experience",
+      description:
+          "Enjoy uninterrupted usage with no ads to distract you from your journey.",
+    ),
+    FeatureRow(
+      iconPath: 'Assets/Icons/verified.png',
+      title: "Get Verified Badge",
+      description:
+          "Showcase your commitment with a verified badge that highlights your dedication to growth.",
+    ),
+    FeatureRow(
+      iconPath: 'Assets/Icons/gift.png',
+      title: "Exclusive Avatars and Frames",
+      description:
+          "Personalize your profile with unique avatars and frames available only to premium members.",
+    ),
+    FeatureRow(
+      iconPath: 'Assets/Icons/trophy.png',
+      title: "Enhanced Commitment",
+      description:
+          "Gain access to tools that help you stay strict and focused on your No Fap journey.",
+    ),
+    FeatureRow(
+      iconPath: 'Assets/Icons/support.png',
+      title: "Support the App",
+      description:
+          "Your subscription helps us maintain and improve the app for all users.",
+    ),
+  ];
 
   @override
   void initState() {
     super.initState();
+    _fetchPrices();
     _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 3) {
         _currentPage++;
@@ -37,11 +73,206 @@ class _PremiumState extends State<Premium> {
     });
   }
 
+  Future<void> _fetchPrices() async {
+    try {
+      final products = await _iapService.queryAllProducts();
+      for (final product in products) {
+        if (product.id == 'monthly_subscription') {
+          setState(() {
+            _monthlyPrice = product.price;
+          });
+        } else if (product.id == 'annual_subscription') {
+          setState(() {
+            _annualPrice = product.price;
+          });
+        }
+      }
+    } catch (e) {
+      // Optionally handle error
+    }
+  }
+
   @override
   void dispose() {
     _timer.cancel();
     _pageController.dispose();
     super.dispose();
+  }
+
+  Widget _buildAnnualButton() {
+    return Stack(
+      children: [
+        OutlinedButton(
+          onPressed: () async {
+            try {
+              await _iapService.buyAnnualSubscription();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Annual subscription purchased!")),
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Purchase failed: $e"),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(color: AppColors.darkGray, width: 2),
+            minimumSize: Size(double.infinity, 60),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: _annualPrice.isNotEmpty ? _annualPrice : "\$30.99",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                TextSpan(
+                  text: "/annually",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: 5,
+          right: 10,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.red,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text(
+              "40% Off",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMonthlyButton() {
+    return Stack(
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            try {
+              await _iapService.buyMonthlySubscription();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Monthly subscription purchased!")),
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Purchase failed: $e"),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.red,
+            foregroundColor: Colors.white,
+            minimumSize: Size(double.infinity, 70),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: _monthlyPrice.isNotEmpty ? _monthlyPrice : "\$3.99",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.white,
+                  ),
+                ),
+                TextSpan(
+                  text: "/monthly",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: 5,
+          right: 10,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text(
+              "Most Selling",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLifetimeButton() {
+    return OutlinedButton(
+      onPressed: () async {
+        try {
+          MaterialPageRoute(builder: (context) => ProductListScreen());
+          // await _iapService.buyLifetimePlan();
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Lifetime plan purchased!")));
+        } catch (e) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Purchase failed: $e")));
+        }
+      },
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: AppColors.darkGray, width: 2),
+        minimumSize: Size(double.infinity, 60),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      child: Text(
+        "\$99.99/Lifetime",
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
   }
 
   @override
@@ -138,200 +369,29 @@ class _PremiumState extends State<Premium> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    child: PageView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      controller: _pageController,
-                      itemBuilder: (context, index) {
-                        final features = [
-                          FeatureRow(
-                            iconPath: 'Assets/Icons/block.png',
-                            title: "Ad-Free Experience",
-                            description:
-                                "Enjoy uninterrupted usage with no ads to distract you from your journey.",
-                          ),
-                          FeatureRow(
-                            iconPath: 'Assets/Icons/verified.png',
-                            title: "Get Verified Badge",
-                            description:
-                                "Showcase your commitment with a verified badge that highlights your dedication to growth.",
-                          ),
-                          FeatureRow(
-                            iconPath: 'Assets/Icons/gift.png',
-                            title: "Exclusive Avatars and Frames",
-                            description:
-                                "Personalize your profile with unique avatars and frames available only to premium members.",
-                          ),
-                          FeatureRow(
-                            iconPath: 'Assets/Icons/trophy.png',
-                            title: "Enhanced Commitment",
-                            description:
-                                "Gain access to tools that help you stay strict and focused on your No Fap journey.",
-                          ),
-                        ];
-                        return features[index];
-                      },
-                    ),
-                  ),
-
-                  Stack(
-                    children: [
-                      OutlinedButton(
-                        onPressed: () async {
-                          try {
-                            await _iapService.buyAnnualSubscription();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Annual subscription purchased!"),
-                              ),
-                            );
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Purchase failed: $e")),
-                            );
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: AppColors.darkGray, width: 2),
-                          minimumSize: Size(double.infinity, 60),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          "\$30.99/Annually",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 5,
-                        right: 10,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.red,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text(
-                            "40% Off",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Display FeatureRows vertically
+                  ..._features,
+                  SizedBox(height: 30),
+                  _buildAnnualButton(),
                   SizedBox(height: 10),
-                  Stack(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            await _iapService.buyMonthlySubscription();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  "Monthly subscription purchased!",
-                                ),
-                              ),
-                            );
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Purchase failed: $e")),
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.red,
-                          foregroundColor: Colors.white,
-                          minimumSize: Size(double.infinity, 70),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          "\$3.99/Monthly",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 5,
-                        right: 10,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text(
-                            "Most Selling",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  _buildMonthlyButton(),
                   SizedBox(height: 10),
-                  OutlinedButton(
+                  TextButton(
                     onPressed: () async {
-                      try {
-                        MaterialPageRoute(
-                          builder: (context) => ProductListScreen(),
-                        );
-                        // await _iapService.buyLifetimePlan();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Lifetime plan purchased!")),
-                        );
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Purchase failed: $e")),
-                        );
-                      }
+                      // Handle restore purchases
+                      await _iapService.restorePurchasesAndCheckActive(context);
                     },
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: AppColors.darkGray, width: 2),
-                      minimumSize: Size(double.infinity, 60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                     child: Text(
-                      "\$99.99/Lifetime",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      "Restore Purchases",
+                      style: TextStyle(color: AppColors.darkGray2),
                     ),
                   ),
+                  // _buildLifetimeButton(),
                   Text(
                     "You can cancel your subscription at any time",
                     style: TextStyle(
@@ -340,6 +400,7 @@ class _PremiumState extends State<Premium> {
                       color: AppColors.darkGray2,
                     ),
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

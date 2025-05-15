@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
+import 'package:FapFree/Services/IAPService.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:FapFree/Providers/AvatarAndFrameProvider.dart';
 import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
-import 'package:FapFree/Screens/Onboarding/OnboardingScreen1.dart';
 import 'package:FapFree/Screens/Premium/Premium.dart';
 import 'package:FapFree/Screens/PrivacyPolicyScreen.dart';
 import 'package:FapFree/Services/FirebaseDatabaseService.dart';
@@ -28,6 +26,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _loadUsername();
+    fetchProducts();
+  }
+
+  void fetchProducts() async {
+    final iapService = IAPService();
+    final products = await iapService.queryAllProducts();
+    for (final product in products) {
+      print('Product: ${product.title}, Price: ${product.price}');
+    }
   }
 
   Future<void> _loadUsername() async {
@@ -409,14 +416,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   return StatefulBuilder(
                     builder: (context, setState) {
                       return AlertDialog(
-                        title: Text('Disable Ads'),
+                        title: Text(
+                          'Disable Ads',
+                          style: TextStyle(
+                            color: AppColors.darkGray,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              'You can turn off ads for free!\n\n'
-                              'If you enjoy using this app, please consider supporting us by purchasing Premium. Your support is highly appreciated.',
-                              style: TextStyle(fontSize: 16),
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.darkGray,
+                                ), // Default style for the entire text
+                                children: <TextSpan>[
+                                  const TextSpan(
+                                    text:
+                                        'You can turn off ads for free!\n\n'
+                                        'If you enjoy using this app, please consider supporting us by ',
+                                  ),
+                                  TextSpan(
+                                    text: 'purchasing Premium',
+                                    style: TextStyle(
+                                      color:
+                                          Colors
+                                              .blue, // Change this color as needed
+                                      fontWeight:
+                                          FontWeight
+                                              .bold, // You can also add other style properties
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text:
+                                        '. Your support is highly appreciated.',
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 20),
                             Row(

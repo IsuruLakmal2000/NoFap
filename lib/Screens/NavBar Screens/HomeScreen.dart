@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:FapFree/Models/TaslModel.dart';
 import 'package:FapFree/Providers/AuthProvider.dart';
-import 'package:FapFree/Providers/FirebaseSignInAuthProvider.dart';
 import 'package:FapFree/Screens/PanicScreen.dart';
-import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 import 'package:FapFree/Theme/colors.dart';
 import 'package:FapFree/Widgets/HomeScreen/RelapseChart.dart';
 import 'package:FapFree/Widgets/HomeScreen/SetStreakDialog.dart';

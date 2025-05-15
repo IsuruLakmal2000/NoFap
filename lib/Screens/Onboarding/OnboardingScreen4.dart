@@ -8,7 +8,6 @@ import 'package:FapFree/theme/colors.dart';
 import 'package:FapFree/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:FapFree/Widgets/CustomInputField.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:FapFree/Services/FirebaseDatabaseService.dart';
 
 class OnboardingScreen4 extends StatefulWidget {
