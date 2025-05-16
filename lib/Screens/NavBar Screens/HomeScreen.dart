@@ -1,3 +1,6 @@
+import 'package:FapFree/Services/FirebaseDatabaseService.dart';
+import 'package:FapFree/Services/IAPService.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:FapFree/Models/TaslModel.dart';
 import 'package:FapFree/Providers/AuthProvider.dart';
@@ -23,13 +26,25 @@ class _HomeScreenState extends State<HomeScreen> {
   int userPoints = 0;
   late String username = '';
   String relapseChartKey = UniqueKey().toString(); // Add and initialize the key
+  final IAPService _iapService = IAPService();
+  bool _didRestore = false;
 
   @override
   void initState() {
     super.initState();
     _checkFirstTimeUser();
     _loadUserPoints();
-    _loadUserPremiumData();
+    // _loadUserPremiumData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_didRestore) {
+      _didRestore = true; // Ensure it's only called once
+      _restorePremiumStatus();
+    }
   }
 
   Future<void> _loadUserPoints() async {
@@ -37,20 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       userPoints = authProvider.currentUserPoints;
     });
-  }
-
-  Future<void> _loadUserPremiumData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isPremium = prefs.getBool('isPremiumPurchased') ?? false;
-    if (isPremium) {
-      await prefs.setBool('is_unlock_frame1', true);
-      await prefs.setBool('is_unlock_frame4', true);
-      await prefs.setBool('is_unlock_frame6', true);
-      await prefs.setBool('is_unlock_avatar3', true);
-      await prefs.setBool('is_unlock_avatar4', true);
-      await prefs.setBool('is_unlock_avatar5', true);
-      await prefs.setBool('is_unlock_avatar7', true);
-    }
   }
 
   Future<void> _checkFirstTimeUser() async {
@@ -71,6 +72,20 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     }
+  }
+
+  Future<void> _restorePremiumStatus() async {
+    print("Restoring premium status");
+    // show loading indicator
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) {
+    //     return Center(child: CircularProgressIndicator());
+    //   },
+    // );
+
+    _iapService.restorePurchasesAndCheckActive(context);
   }
 
   void _showStreakPopup() {

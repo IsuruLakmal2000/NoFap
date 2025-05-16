@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:FapFree/theme/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,7 +17,7 @@ class _RelapseChartState extends State<RelapseChart> {
   @override
   void initState() {
     super.initState();
-    print("RelapseChart initState called");
+
     _loadData();
     getOldestRelapsedDate();
   }
@@ -55,9 +54,6 @@ class _RelapseChartState extends State<RelapseChart> {
         _streakStartDate = normalizedStartDate;
         _relapseData[normalizedStartDate] = true;
       });
-      for (var date in _relapseData.keys) {
-        print("relapse dates ---" + date.toString());
-      }
     }
 
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
@@ -76,7 +72,6 @@ class _RelapseChartState extends State<RelapseChart> {
     List<String>? relapseDateStrings = prefs.getStringList('relapseDates');
 
     if (relapseDateStrings != null) {
-      print('relapse adt------' + relapseDateStrings.toString());
       List<DateTime> relapseDates =
           relapseDateStrings
               .map((dateString) => DateTime.parse(dateString))
@@ -85,7 +80,6 @@ class _RelapseChartState extends State<RelapseChart> {
       if (relapseDates.isNotEmpty) {
         DateTime oldestRelapseDate = relapseDates.first;
         _oldestRelapseDate = oldestRelapseDate;
-        print("Oldest relapse date: $oldestRelapseDate");
       }
     } else {
       String? startDateString = prefs.getString('streakStartDate');
@@ -97,8 +91,6 @@ class _RelapseChartState extends State<RelapseChart> {
           startDate.day,
         );
         await saveRelapseDate(normalizedStartDate);
-
-        print("No relapse dates found, saved start date as first.");
       } else {
         print("No start date found to initialize relapse chart.");
       }
@@ -201,13 +193,13 @@ class _RelapseChartState extends State<RelapseChart> {
                         _oldestRelapseDate != null &&
                         day.isBefore(_oldestRelapseDate!);
 
-                    print(
-                      "Day: $day, "
-                      "isBeforeStreakStart: $isBeforeStreakStart, "
-                      "isBeforeOldestRelapse: $isBeforeOldestRelapse, "
-                      "isToday: $isToday, "
-                      "isRelapseDay: $isRelapseDay",
-                    );
+                    // print(
+                    //   "Day: $day, "
+                    //   "isBeforeStreakStart: $isBeforeStreakStart, "
+                    //   "isBeforeOldestRelapse: $isBeforeOldestRelapse, "
+                    //   "isToday: $isToday, "
+                    //   "isRelapseDay: $isRelapseDay",
+                    // );
 
                     return Container(
                       width: 10,

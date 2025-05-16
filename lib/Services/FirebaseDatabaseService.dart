@@ -305,4 +305,19 @@ class FirebaseDatabaseService {
       return false;
     }
   }
+
+  Future<void> updateUserPurchaseStatus(bool isPurchased) async {
+    final user = _auth.currentUser;
+    try {
+      if (user != null) {
+        await _dbRef
+            .child('users/${user.uid}/isPerchasePremium')
+            .set(isPurchased);
+      } else {
+        print("Error: No authenticated user found.");
+      }
+    } catch (e) {
+      print("Error updating purchase status: $e");
+    }
+  }
 }

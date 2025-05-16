@@ -9,6 +9,7 @@ import 'package:FapFree/Theme/colors.dart' show AppColors;
 import 'package:FapFree/Providers/AuthProvider.dart' as LocalAuthProvider;
 import 'package:FapFree/Widgets/ProfileScreen/AvatarSelectionWidget.dart';
 import 'package:FapFree/Widgets/ProfileScreen/FrameSelectionWidget.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
   bool isPremiumPurchased = false;
   int currentStreak = 0;
+  final InAppReview inAppReview = InAppReview.instance;
 
   @override
   void initState() {
@@ -34,6 +36,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final products = await iapService.queryAllProducts();
     for (final product in products) {
       print('Product: ${product.title}, Price: ${product.price}');
+    }
+  }
+
+  void requestReview() async {
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    } else {
+      // Fallback: open the app's Play Store page
+      inAppReview.openStoreListing();
     }
   }
 
@@ -204,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Consumer<LocalAuthProvider.AuthProvider>(
                     builder: (context, authProvider, child) {
                       return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -215,6 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 size: 20,
                                 color: AppColors.red,
                               ),
+
                               Text(
                                 '${currentStreak} days',
                                 style: TextStyle(
@@ -225,17 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ],
                           ),
-                          Text(
-                            isPremiumPurchased ? "Premium user" : "Free user",
-                            style: TextStyle(
-                              color:
-                                  isPremiumPurchased
-                                      ? const Color.fromARGB(255, 255, 153, 1)
-                                      : AppColors.darkGray2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                          SizedBox(width: 20),
                           Row(
                             children: [
                               Text(
@@ -525,20 +527,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             },
           ),
-          SizedBox(height: 10),
-          _buildProfileOption(
-            title: 'Help & Support',
-            leadingIcon: Icons.help_outline,
-            onTap: () {
-              // Navigate to Help & Support screen
-            },
-          ),
+
           SizedBox(height: 10),
           _buildProfileOption(
             title: 'Rate Us',
             leadingIcon: Icons.star,
             onTap: () {
-              // Navigate to Help & Support screen
+              requestReview();
             },
           ),
         ],

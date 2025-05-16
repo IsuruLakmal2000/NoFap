@@ -1,3 +1,4 @@
+import 'package:FapFree/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:FapFree/Theme/colors.dart';
 import 'dart:async';
@@ -180,6 +181,11 @@ class _PremiumState extends State<Premium> {
               await _iapService.buyMonthlySubscription();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("Monthly subscription purchased!")),
+              );
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.home,
+                (Route<dynamic> route) => false,
               );
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -384,7 +390,8 @@ class _PremiumState extends State<Premium> {
                   TextButton(
                     onPressed: () async {
                       // Handle restore purchases
-                      await _iapService.restorePurchasesAndCheckActive(context);
+                      _iapService.restorePurchasesAndCheckActive(context);
+                      setState(() {});
                     },
                     child: Text(
                       "Restore Purchases",

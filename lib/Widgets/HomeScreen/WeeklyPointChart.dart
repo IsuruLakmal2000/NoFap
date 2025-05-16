@@ -30,7 +30,6 @@ class _WeeklyPointsChartState extends State<WeeklyPointsChart> {
       int points =
           prefs.getInt(key) ?? 0; // Default to 0 if no points for that date
       pointsMap[date] = points;
-      print("Key: $key, Points: $points"); // Display key and points in console
     }
 
     setState(() {
