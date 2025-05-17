@@ -21,13 +21,13 @@ class OnboardingScreen1 extends StatelessWidget {
               child: Column(
                 children: [
                   LinearProgressIndicator(
-                    value: 0.25,
+                    value: 0.20,
                     backgroundColor: Colors.grey[300],
                     valueColor: AlwaysStoppedAnimation<Color>(
                       AppColors.darkGray,
                     ),
                   ),
-                  Text("25%"),
+                  Text("20%"),
                 ],
               ),
             ),

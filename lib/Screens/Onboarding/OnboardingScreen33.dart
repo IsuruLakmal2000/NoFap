@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:FapFree/Routes.dart';
 import 'package:FapFree/Theme/colors.dart';
 import 'package:FapFree/Widgets/CustomButton.dart';
-import 'package:FapFree/routes.dart';
+import 'package:flutter/material.dart';
 
-class OnboardingScreen3 extends StatelessWidget {
-  const OnboardingScreen3({super.key});
+class OnboardingScreen33 extends StatelessWidget {
+  const OnboardingScreen33({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,26 +20,20 @@ class OnboardingScreen3 extends StatelessWidget {
               child: Column(
                 children: [
                   LinearProgressIndicator(
-                    value: 0.80,
+                    value: 0.6,
                     backgroundColor: Colors.grey[300],
                     valueColor: AlwaysStoppedAnimation<Color>(
                       AppColors.darkGray,
                     ),
                   ),
-                  Text("80%"),
+                  Text("60%"),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Lottie.asset(
-              "Assets/Lottie/onboard1.json",
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: 200,
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: 10),
+
+            SizedBox(height: 50),
             Text(
-              'How FapFree Helps You',
+              'Understanding the Impact',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -48,40 +41,42 @@ class OnboardingScreen3 extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 10),
-                  buildBox("Streak Counter", Icons.track_changes),
-                  SizedBox(height: 10),
-                  buildBox("Urge Manager", Icons.flag),
-                  SizedBox(height: 10),
-                  buildBox("Insights", Icons.group),
-                  SizedBox(height: 10),
-                  buildBox("Access Resources and Tips", Icons.book),
-                ],
-              ),
-            ),
-            Spacer(),
 
-            //create scrollable list of 4 boxes .
-            // Expanded(
-            //   child: GridView.count(
-            //     crossAxisCount: 1,
-            //     crossAxisSpacing: 10,
-            //     mainAxisSpacing: 10,
-            //     children: [
-            //       buildBox("Streak Counter", Icons.track_changes),
-            //       buildBox("Urge Manager", Icons.flag),
-            //       buildBox("Insights", Icons.group),
-            //       buildBox("Access Resources and Tips", Icons.book),
-            //     ],
-            //   ),
+            SizedBox(height: 50),
+
+            // i want to add 4 boxes , 2 in each row
+            Column(
+              children: [
+                buildBox(
+                  "Decreased Concentration & Focus",
+                  Icons.arrow_drop_down_circle_sharp,
+                ),
+                SizedBox(height: 20),
+                buildBox(
+                  "Feeling Tired All the Time",
+                  Icons.battery_1_bar_outlined,
+                ),
+                SizedBox(height: 20),
+                buildBox("Lower Self-Esteem", Icons.assist_walker_sharp),
+                SizedBox(height: 20),
+                buildBox(
+                  "Relationship Difficulties",
+                  Icons.accessibility_new_outlined,
+                ),
+              ],
+            ),
+            //add text
+            // Text(
+            //   'Your brain is a complex organ that can be trained to resist urges and cravings.',
+            //   style: TextStyle(fontSize: 18, color: AppColors.darkGray),
+            //   textAlign: TextAlign.center,
             // ),
+            Spacer(),
             CustomButton(
               text: 'Next',
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.onboarding5);
+                // Navigate to the home screen
+                Navigator.pushNamed(context, AppRoutes.onboarding4);
               },
             ),
           ],
@@ -94,7 +89,6 @@ class OnboardingScreen3 extends StatelessWidget {
   Widget buildBox(String text, IconData icon) {
     return Container(
       height: 80,
-      width: double.infinity,
       decoration: BoxDecoration(
         // add gradient color
         gradient: LinearGradient(

@@ -1,7 +1,7 @@
 name: FapFree
 description: ""
 publish_to: "none"
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.7.2
@@ -49,6 +49,7 @@ flutter:
     - Assets/coupleenjoy.png
     - Assets/couplesad.png
     - Assets/manalone.png
+    - Assets/habbitcycle.png
     - Assets/sit.png
     - Assets/skating.png
     - Assets/smoking.png
@@ -79,6 +80,7 @@ flutter:
     - Assets/Lottie/onboard2.json
     - Assets/Lottie/onboard4.json
     - Assets/Lottie/onboard5.json
+    - Assets/Lottie/brain.json
     - Assets/Icons/block.png
     - Assets/Icons/gift.png
     - Assets/Icons/support.png

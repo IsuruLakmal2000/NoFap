@@ -121,7 +121,7 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
                           value: 1,
                           backgroundColor: Colors.grey[300],
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.darkGray,
+                            Colors.green,
                           ),
                         ),
                         Text("100%"),
@@ -143,9 +143,9 @@ class _OnboardingScreen4State extends State<OnboardingScreen4> {
                         ),
                         SizedBox(height: 20),
                         Text(
-                          'Join Us',
+                          'Congratulations! \nYou\'re Almost There',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 26,
                             fontWeight: FontWeight.bold,
                             color: AppColors.darkGray,
                           ),
